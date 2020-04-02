@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import Exceptions.InvalidArgumentException;
 import simulator.misc.SortedArrayList;
 
-public class TrafficSimulator {
+public class TrafficSimulator implements Observable<TrafficSimObserver> {
 	
 	private RoadMap map_of_roads;
 	private List<Event> list_of_events; 
@@ -107,6 +107,22 @@ public class TrafficSimulator {
 
 	public void setTime_of_simulation(int time_of_simulation) {
 		this.time_of_simulation = time_of_simulation;
+	}
+
+
+
+	@Override
+	public void addObserver(TrafficSimObserver o) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void removeObserver(TrafficSimObserver o) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
