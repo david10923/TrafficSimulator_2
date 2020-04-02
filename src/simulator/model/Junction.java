@@ -190,6 +190,11 @@ public class Junction extends SimulatedObject {
 		QueueList.add(cola);
 		this.mapOfQueueRoad.put(r, cola);
 		
+		
+		
+		
+		
+
 	}
 
 	void addOutgoingRoad(Road r) throws Exception {

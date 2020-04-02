@@ -198,6 +198,7 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 				
 				
 				
+				
 				if(this.Road != null) {
 					try {
 						this.Road.enter(this);
