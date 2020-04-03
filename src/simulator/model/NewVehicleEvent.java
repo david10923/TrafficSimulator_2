@@ -44,6 +44,11 @@ public class NewVehicleEvent extends Event{
 		}
 		
 	}
+	
+	public String toString(){
+		return "New Vehicle'"+this.id+ " ' ";
+	}
+	
 
 
 	

@@ -38,6 +38,7 @@ public abstract class NewRoadEvent extends Event {
 			
 			
 		}
+	
 		
 	public abstract Road createRoadObject();
 }

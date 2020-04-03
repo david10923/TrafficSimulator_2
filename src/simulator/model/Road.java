@@ -67,7 +67,7 @@ public abstract class Road extends SimulatedObject {
 		
 
 	@Override
-	void advance(int time) {
+	void advance(int time) throws Exception {
 	
 		
 		//1
@@ -77,14 +77,14 @@ public abstract class Road extends SimulatedObject {
 		//3
 		for(Vehicle c : this.Vehicles) {
 						
-			try {
+			//try {
 				if(c.getStatus() != VehicleStatus.WAITING){
 					c.setSpeed(calculateVehicleSpeed(c));
 				}				
-			} catch (Exception e) {
+			//} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.getMessage();
-			}
+				//e.getMessage();
+			//}
 			c.advance(time);		
 		}	
 		

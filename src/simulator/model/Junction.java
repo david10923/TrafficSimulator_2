@@ -58,7 +58,7 @@ public class Junction extends SimulatedObject {
 	}
 
 	@Override
-	void advance(int time) {
+	void advance(int time) throws Exception {
 
 		if (this.TrafficLight != this.ReedLight) {
 			if(!this.QueueList.isEmpty()) {
@@ -68,12 +68,12 @@ public class Junction extends SimulatedObject {
 				list = this.Strategy_of_droping_vehicles.dequeue(q);
 
 				for (int i = 0; i < list.size(); i++) {
-					try {
+					//try {
 						list.get(i).moveToNextRoad();
-					} catch (Exception e) {
+					//} catch (Exception e) {
 						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+						//e.getMessage();
+					//}
 
 					this.QueueList.get(this.TrafficLight).remove(list.get(i));
 					

@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import Exceptions.InvalidArgumentException;
 import simulator.misc.SortedArrayList;
 
-public class TrafficSimulator implements Observable<TrafficSimObserver> {
+public class TrafficSimulator implements Observable<TrafficSimObserver> , TrafficSimObserver {
 	
 	private RoadMap map_of_roads;
 	private List<Event> list_of_events; 
@@ -28,10 +28,13 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
 	
 	public void addEvent (Event e) {
 		this.list_of_events.add(e); 
+		onEventAdded(this.map_of_roads,this.list_of_events,e,this.time_of_simulation);
 	}
 	
 	public void advance() {
 		this.time_of_simulation++;
+		
+		onAdvanceStart(this.map_of_roads,this.list_of_events,this.time_of_simulation);
 		
 		Iterator<Event> it  = this.list_of_events.iterator();
 		
@@ -46,16 +49,28 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
 		//paso 3
 		
 		for(int i = 0; i< this.map_of_roads.getJunctions().size();i++) {
-			this.map_of_roads.getJunctions().get(i).advance(this.time_of_simulation);
+			try {
+				this.map_of_roads.getJunctions().get(i).advance(this.time_of_simulation);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				onError(e.getMessage());
+				// se supone que hay que lanzarla 
+			}
 		}
 		
 		
 		// paso 4 
 		
 		for(int i = 0; i< this.map_of_roads.getRoads().size();i++) {
-			this.map_of_roads.getRoads().get(i).advance(this.time_of_simulation);
+			try {
+				this.map_of_roads.getRoads().get(i).advance(this.time_of_simulation);
+			} catch (Exception e) {
+				onError(e.getMessage());			
+				// se suopone que hay que lanzar la excepcion
+			}
 		}
 		
+		onAdvanceEnd(this.map_of_roads,this.list_of_events,this.time_of_simulation);
 		
 	
 	}
@@ -65,6 +80,8 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
 		this.map_of_roads.reset(); 		
 		this.list_of_events.clear();	
 		this.time_of_simulation = 0;
+		
+		onReset(this.map_of_roads,this.list_of_events,this.time_of_simulation);
 	}
 	
 	
@@ -113,7 +130,10 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
 
 	@Override
 	public void addObserver(TrafficSimObserver o) {
-		// TODO Auto-generated method stub
+		
+		
+		// depues de añadir el observer
+		onRegister(this.map_of_roads,this.list_of_events,this.time_of_simulation);
 		
 	}
 
@@ -121,7 +141,7 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
 
 	@Override
 	public void removeObserver(TrafficSimObserver o) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

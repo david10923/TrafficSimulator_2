@@ -57,7 +57,6 @@ public class NewSetContClassEvent extends Event{
 	}
 	
 	
-	
 
 	public List<Pair<String, Integer>> getCs() {
 		return cs;

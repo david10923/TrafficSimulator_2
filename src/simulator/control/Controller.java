@@ -12,6 +12,7 @@ import org.json.JSONTokener;
 import Exceptions.InvalidArgumentException;
 import simulator.factories.Factory;
 import simulator.model.Event;
+import simulator.model.TrafficSimObserver;
 import simulator.model.TrafficSimulator;
 
 public class Controller {
@@ -108,6 +109,21 @@ public class Controller {
 		this._eventsFactory = _eventsFactory;
 	}
 	
+	
+	
+	///////EL CONTROLADOR ACTUA SOBRE EL MODELO ///////
+	
+	public void addObserver(TrafficSimObserver o ){
+			this._sim.addObserver(o);
+	}
+	
+	public void removeObserver(TrafficSimObserver o ){
+			this.removeObserver(o);
+	}
+	
+	public void addEvent(Event e){
+		this.addEvent(e);
+	}
 	
 	
 	
