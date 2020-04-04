@@ -10,6 +10,8 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.SwingUtilities;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -19,6 +21,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 import Exceptions.InvalidArgumentException;
+import Vista.MainWindow;
 import simulator.control.Controller;
 import simulator.factories.*;
 import simulator.model.*;
@@ -32,6 +35,9 @@ public class Main {
 	private static Factory<Event> _eventsFactory = null;
 	
 	private static String time = null; 
+	
+	/////PARA LA OPCION MODE /////
+	private static String mode = null;
 	
 	private static void parseArgs(String[] args) {
 
@@ -48,6 +54,7 @@ public class Main {
 			parseInFileOption(line);
 			parseOutFileOption(line);
 			parseInFileOption2(line);
+			parseModeOption(line);
 
 			// if there are some remaining arguments, then something wrong is
 			// provided in the command line!
@@ -77,6 +84,9 @@ public class Main {
 		
 		cmdLineOptions.addOption(Option.builder("t").longOpt("ticks").hasArg().desc("Ticks to the simulatorï¿½s main loop").build());
 
+		///////AÑADIDO EL MODO DE VISUALIZACION////////
+		cmdLineOptions.addOption(Option.builder("m").longOpt("mode").hasArg().desc("Mode of the app").build());
+		
 		return cmdLineOptions;
 	}
 
@@ -108,6 +118,13 @@ public class Main {
 			throw new ParseException("The value is less than 0");
 		}
 		
+	}
+	///////////////AÑADIR LA OPCION -M MODE ////////////////////
+	private static void parseModeOption(CommandLine line) {
+		mode = line.getOptionValue("m"); // mode puede tener el valor de "gui" o el valor de "console"
+		if(mode == null) {
+			mode = "gui";
+		}
 	}
 	
 	
@@ -160,6 +177,34 @@ public class Main {
 		System.out.println("Done!");
 	}
 
+	
+	////////METODO QUE INICIALIZA CUANDO QUEREMOS LA GUI ////////
+	
+	private static void startGUImode ()throws IOException {
+		
+		TrafficSimulator sim = new TrafficSimulator();
+		Controller ctrl;
+		
+		InputStream in = new FileInputStream(new File(_inFile)); // hay que cargarlos solo si se proporciona
+				
+		try {
+			ctrl = new Controller(sim, _eventsFactory);
+			ctrl.loadEvents(in);
+			
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run () {
+					new MainWindow(ctrl);
+				}
+			});
+			
+			
+		} catch (InvalidArgumentException e) {
+			// TODO Auto-generated catch block
+			e.getMessage();
+		}
+		
+		
+	}
 	private static void start(String[] args) throws IOException {
 		initFactories();
 		parseArgs(args);

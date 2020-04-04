@@ -1,5 +1,6 @@
 package simulator.model;
 
+import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -339,6 +340,18 @@ public class Junction extends SimulatedObject {
 
 	public void setMapOfQueueRoad(Map<Road, List<Vehicle>> mapOfQueueRoad) {
 		this.mapOfQueueRoad = mapOfQueueRoad;
+	}
+
+	public int getX() {
+		return this.xCoor;
+	}
+
+	public int getY() {
+		return this.yCoor;
+	}
+
+	public void setIncomingRoadList(List<Road> incomingRoadList) {
+		IncomingRoadList = incomingRoadList;
 	}
 
 	/*

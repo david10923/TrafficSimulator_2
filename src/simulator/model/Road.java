@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.swing.JComponent;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -19,6 +21,7 @@ public abstract class Road extends SimulatedObject {
 	protected int Masive_Pollution;
 	protected Weather environmental_conditions; 
 	protected int Global_Pollution; 
+		
 	protected List<Vehicle> Vehicles; 
 	
 	
@@ -188,9 +191,56 @@ public abstract class Road extends SimulatedObject {
 		
 	}
 	
+	
+	
+	
+	
+	
 	protected abstract void reduceTotalContamination() ;
 	protected abstract void updateSpeedLimit(); 
 	protected abstract int calculateVehicleSpeed(Vehicle v);
+
+
+
+
+	public Junction getSrc() {
+		return Source;
+	}
+
+
+
+
+	public Junction getDest() {
+		return Destination;
+	}
+	
+	public int getGlobal_Pollution() {
+		return Global_Pollution;
+	}
+
+
+
+
+	public void setGlobal_Pollution(int global_Pollution) {
+		Global_Pollution = global_Pollution;
+	}
+
+
+
+	public int getMasive_Pollution() {
+		return Masive_Pollution;
+	}
+
+
+
+
+	public void setMasive_Pollution(int masive_Pollution) {
+		Masive_Pollution = masive_Pollution;
+	}
+
+
+
+
 	
 
 }

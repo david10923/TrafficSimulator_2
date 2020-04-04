@@ -18,6 +18,7 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> , Traffi
 	private List<Event> list_of_events; 
 	private int time_of_simulation; 
 	
+	
 	public TrafficSimulator(){
 		this.list_of_events = new SortedArrayList<Event>();
 		this.time_of_simulation= 0;
@@ -64,7 +65,7 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> , Traffi
 		for(int i = 0; i< this.map_of_roads.getRoads().size();i++) {
 			try {
 				this.map_of_roads.getRoads().get(i).advance(this.time_of_simulation);
-			} catch (Exception e) {
+			} catch (Exception e) {a
 				onError(e.getMessage());			
 				// se suopone que hay que lanzar la excepcion
 			}
@@ -140,9 +141,59 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> , Traffi
 
 
 	@Override
-	public void removeObserver(TrafficSimObserver o) {
-		
+	public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
+		// TODO Auto-generated method stub
 		
 	}
+
+
+
+	@Override
+	public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void onReset(RoadMap map, List<Event> events, int time) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void onRegister(RoadMap map, List<Event> events, int time) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void onError(String err) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void removeObserver(TrafficSimObserver o) {
+		// TODO Auto-generated method stub
+		
+	}
+
+ 
 
 }
