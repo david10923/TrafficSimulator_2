@@ -38,12 +38,16 @@ public class Main {
 	
 	/////PARA LA OPCION MODE /////
 	private static String mode = null;
+	private final static String guimode ="gui";
+	
+	///////////////
 	
 	private static void parseArgs(String[] args) {
 
 		// define the valid command line options
 		//
 		Options cmdLineOptions = buildOptions();
+		
 
 		// parse the command line as provided in args
 		//
@@ -51,10 +55,11 @@ public class Main {
 		try {
 			CommandLine line = parser.parse(cmdLineOptions, args);
 			parseHelpOption(line, cmdLineOptions);
+			parseModeOption(line); //////HAY QUE VER EL ORDEN
 			parseInFileOption(line);
 			parseOutFileOption(line);
 			parseInFileOption2(line);
-			parseModeOption(line);
+			
 
 			// if there are some remaining arguments, then something wrong is
 			// provided in the command line!
@@ -98,15 +103,21 @@ public class Main {
 		}
 	}
 
-	private static void parseInFileOption(CommandLine line) throws ParseException {
-		_inFile = line.getOptionValue("i");
-		if (_inFile == null) {
-			throw new ParseException("An events file is missing");
+	private static void parseInFileOption(CommandLine line) throws ParseException {	
+		
+		if(mode.equalsIgnoreCase(guimode)){////// EL PARAMETRO -I ES OPCIONAL SI ES MODO GUI
+			_inFile = line.getOptionValue("i");			
+			if (_inFile == null) { 
+				throw new ParseException("An events file is missing");			
+			}
 		}
+		
 	}
 
 	private static void parseOutFileOption(CommandLine line) throws ParseException {
-		_outFile = line.getOptionValue("o");
+		if(mode != guimode) {
+			_outFile = line.getOptionValue("o");
+		}		
 	}
 
 	private static void parseInFileOption2(CommandLine line) throws ParseException {
@@ -120,11 +131,12 @@ public class Main {
 		
 	}
 	///////////////AÑADIR LA OPCION -M MODE ////////////////////
-	private static void parseModeOption(CommandLine line) {
+	private static void parseModeOption(CommandLine line) throws ParseException {
 		mode = line.getOptionValue("m"); // mode puede tener el valor de "gui" o el valor de "console"
 		if(mode == null) {
-			mode = "gui";
+			mode = guimode;
 		}
+		
 	}
 	
 	
@@ -182,14 +194,20 @@ public class Main {
 	
 	private static void startGUImode ()throws IOException {
 		
+		InputStream in = null;
+		
 		TrafficSimulator sim = new TrafficSimulator();
 		Controller ctrl;
 		
-		InputStream in = new FileInputStream(new File(_inFile)); // hay que cargarlos solo si se proporciona
-				
+		if(_inFile!= null) 
+			 in = new FileInputStream(new File(_inFile)); // hay que cargarlos solo si se proporciona
+			
 		try {
 			ctrl = new Controller(sim, _eventsFactory);
-			ctrl.loadEvents(in);
+			
+			if(_inFile != null) {
+				ctrl.loadEvents(in);
+			}			
 			
 			SwingUtilities.invokeLater(new Runnable() {
 				public void run () {
@@ -208,6 +226,10 @@ public class Main {
 	private static void start(String[] args) throws IOException {
 		initFactories();
 		parseArgs(args);
+		
+		if(mode ==guimode) {
+			startGUImode();
+		}
 		startBatchMode();
 	}
 

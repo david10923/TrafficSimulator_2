@@ -65,7 +65,7 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> , Traffi
 		for(int i = 0; i< this.map_of_roads.getRoads().size();i++) {
 			try {
 				this.map_of_roads.getRoads().get(i).advance(this.time_of_simulation);
-			} catch (Exception e) {a
+			} catch (Exception e) {
 				onError(e.getMessage());			
 				// se suopone que hay que lanzar la excepcion
 			}
