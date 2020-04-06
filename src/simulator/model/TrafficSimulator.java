@@ -109,7 +109,7 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
 		this.time_of_simulation = 0;
 		
 		for (TrafficSimObserver o : this.listaObservadores) {
-			o.	onReset(this.map_of_roads,this.list_of_events,this.time_of_simulation);
+			o.onReset(this.map_of_roads,this.list_of_events,this.time_of_simulation);
 		}
 	
 	}

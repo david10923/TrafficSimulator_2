@@ -105,7 +105,7 @@ public class Main {
 
 	private static void parseInFileOption(CommandLine line) throws ParseException {	
 		
-		if(mode.equalsIgnoreCase(guimode)){////// EL PARAMETRO -I ES OPCIONAL SI ES MODO GUI
+		if(!mode.equalsIgnoreCase(guimode)){////// EL PARAMETRO -I ES OPCIONAL SI ES MODO GUI
 			_inFile = line.getOptionValue("i");			
 			if (_inFile == null) { 
 				throw new ParseException("An events file is missing");			
