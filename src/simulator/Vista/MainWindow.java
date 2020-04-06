@@ -3,6 +3,7 @@ package simulator.Vista;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
@@ -21,11 +22,18 @@ public class MainWindow extends JFrame  {
 		super ( "Traffic Simulator" );
 		_ctrl = ctrl ;
 		initGUI();
+		
 	}
+	
+	
 	private void initGUI() {		
 		JPanel mainPanel = new JPanel( new BorderLayout());
 		this .setContentPane( mainPanel );
-				
+		Toolkit tk = Toolkit.getDefaultToolkit();
+		Dimension tamanio = tk.getScreenSize();
+		
+		this.setLocation((int)tamanio.getWidth()/6,(int)tamanio.getHeight()/6);
+		
 		/////////AÑADES LA BARRA DE ARRIBA  Y LA DDE ABAJO //////
 		mainPanel .add( new ControlPanel( _ctrl ), BorderLayout. PAGE_START );
 		mainPanel .add( new StatusBar( _ctrl ),BorderLayout. PAGE_END );
@@ -82,7 +90,7 @@ public class MainWindow extends JFrame  {
 		////////AÑADIR LA VISTA DE ABAJO A LA DERECHA ////
 		// TODO add a map for MapByRoadComponent
 		// ...
-		this .setDefaultCloseOperation( DO_NOTHING_ON_CLOSE );
+		this .setDefaultCloseOperation(EXIT_ON_CLOSE);// DO_NOTHING_ON_CLOSE
 		this .pack();
 		this .setVisible( true );
 		}

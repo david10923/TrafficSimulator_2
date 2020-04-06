@@ -229,8 +229,10 @@ public class Main {
 		
 		if(mode ==guimode) {
 			startGUImode();
+		}else {
+			startBatchMode();
 		}
-		startBatchMode();
+	
 	}
 
 	// example command lines:
