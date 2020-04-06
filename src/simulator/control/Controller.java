@@ -114,11 +114,11 @@ public class Controller {
 	///////EL CONTROLADOR ACTUA SOBRE EL MODELO ///////
 	
 	public void addObserver(TrafficSimObserver o ){
-			this._sim.addObserver(o);
+		this._sim.addObserver(o);
 	}
 	
 	public void removeObserver(TrafficSimObserver o ){
-			this.removeObserver(o);
+		this.removeObserver(o);
 	}
 	
 	public void addEvent(Event e){

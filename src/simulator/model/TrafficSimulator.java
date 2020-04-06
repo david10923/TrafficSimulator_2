@@ -12,12 +12,12 @@ import org.json.JSONObject;
 import Exceptions.InvalidArgumentException;
 import simulator.misc.SortedArrayList;
 
-public class TrafficSimulator implements Observable<TrafficSimObserver> , TrafficSimObserver {
+public class TrafficSimulator implements Observable<TrafficSimObserver>  {
 	
 	private RoadMap map_of_roads;
 	private List<Event> list_of_events; 
 	private int time_of_simulation; 
-	
+	//tiene el array list de obvservadores
 	
 	public TrafficSimulator(){
 		this.list_of_events = new SortedArrayList<Event>();
@@ -132,63 +132,11 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> , Traffi
 	@Override
 	public void addObserver(TrafficSimObserver o) {
 		
-		
 		// depues de añadir el observer
 		onRegister(this.map_of_roads,this.list_of_events,this.time_of_simulation);
 		
 	}
 
-
-
-	@Override
-	public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-	@Override
-	public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-	@Override
-	public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-	@Override
-	public void onReset(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-	@Override
-	public void onRegister(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-	@Override
-	public void onError(String err) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-	@Override
 	public void removeObserver(TrafficSimObserver o) {
 		// TODO Auto-generated method stub
 		
