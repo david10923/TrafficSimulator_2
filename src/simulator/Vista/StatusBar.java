@@ -1,10 +1,10 @@
-package Vista;
+package simulator.Vista;
 
 import java.awt.Component;
 
 import simulator.control.Controller;
 
-public class StatusBar extends Component {
+public class StatusBar extends Component  {
 	
 	private Controller controller; 
 	

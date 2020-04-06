@@ -1,4 +1,4 @@
-package Vista;
+package simulator.Vista;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -28,7 +30,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver ,ActionLi
 	private JButton play; 
 	private JButton stop;
 	private JLabel ticks; 
-	private JTextField numeroDeTicks;
+	private JTextField numeroDeTicks; // NO ES DE TIPO TYEXT FIELD PERO NO SE DE QUE TIPO ES 
 	
 	
 	public ControlPanel(Controller controller){
@@ -122,10 +124,36 @@ public class ControlPanel extends JPanel implements TrafficSimObserver ,ActionLi
 
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) { //////PREGUNTAR SI ESTÁ BIEN HECHO DE ESTA MANERA ////
+		Object botonPulsado = e.getSource();
 		
-		
-		
+		if(botonPulsado == this.fichero){ /// EL ICONO DE LA CARPETA 
+			
+			JFileChooser fc = new JFileChooser ();
+			int respuesta  = fc.showOpenDialog(this); 
+			
+			if(respuesta == JFileChooser.APPROVE_OPTION){
+				File archivoElegido = fc.getSelectedFile();
+				controller.reset();
+				
+				//controller.loadEvents(in); // el imput sera del fichero pero no es de tipo Imput
+				///// ¿ HAY QUE AÑADIR EL NOMBRE DEL FICHERO ELEGIODO ????///
+			}
+			
+			
+		}
+		else if (botonPulsado == this.contaminacion){
+			
+		}
+		else if (botonPulsado == this.cambioContaminacion){
+			
+		}
+		else if (botonPulsado == this.play){
+			
+		}
+		else if(botonPulsado == this.stop){
+			
+		}
 	}
 
 }

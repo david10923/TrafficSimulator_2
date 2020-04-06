@@ -6,36 +6,50 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Observer;
 
 import org.json.JSONObject;
+import simulator.model.TrafficSimObserver;
 
 import Exceptions.InvalidArgumentException;
 import simulator.misc.SortedArrayList;
 
-public class TrafficSimulator implements Observable<TrafficSimObserver>  {
+public class TrafficSimulator implements Observable<TrafficSimObserver> {
 	
 	private RoadMap map_of_roads;
 	private List<Event> list_of_events; 
 	private int time_of_simulation; 
-	//tiene el array list de obvservadores
+	private List<TrafficSimObserver> listaObservadores ; 
 	
 	public TrafficSimulator(){
 		this.list_of_events = new SortedArrayList<Event>();
 		this.time_of_simulation= 0;
 		this.map_of_roads = new RoadMap();
+		this.listaObservadores = new ArrayList<TrafficSimObserver>();
 	}
 	
-	
+	///////CADA VEZ QUE CMABIO ALGO SE  LO TENGO QUE NOTIFICAR A LOS OBSERVADORES PARA QUE HAGAN SUS CAMBIOS ///
 	
 	public void addEvent (Event e) {
 		this.list_of_events.add(e); 
-		onEventAdded(this.map_of_roads,this.list_of_events,e,this.time_of_simulation);
+		////////INDICO A TODOS LOS OBSERVADORES QUE AÑADO UN EVENTO //////
+		for(TrafficSimObserver o : this.listaObservadores){
+			o.onEventAdded(this.map_of_roads,this.list_of_events,e,this.time_of_simulation);
+		}
+		
 	}
 	
+
+	
+
+
 	public void advance() {
 		this.time_of_simulation++;
 		
-		onAdvanceStart(this.map_of_roads,this.list_of_events,this.time_of_simulation);
+		////////INDICO A TODOS LOS OBSERVADORES QUE AVANZO  //////
+		for(TrafficSimObserver o : this.listaObservadores){
+			o.onAdvanceStart(this.map_of_roads,this.list_of_events,this.time_of_simulation);
+		}
 		
 		Iterator<Event> it  = this.list_of_events.iterator();
 		
@@ -47,31 +61,43 @@ public class TrafficSimulator implements Observable<TrafficSimObserver>  {
 			}
 		}
 		
-		//paso 3
+	
 		
 		for(int i = 0; i< this.map_of_roads.getJunctions().size();i++) {
 			try {
 				this.map_of_roads.getJunctions().get(i).advance(this.time_of_simulation);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				onError(e.getMessage());
-				// se supone que hay que lanzarla 
+				
+				for(TrafficSimObserver o : this.listaObservadores){
+					o.onError(e.getMessage());					
+				}
+				
+				e.getMessage();
 			}
 		}
 		
 		
-		// paso 4 
+	
 		
 		for(int i = 0; i< this.map_of_roads.getRoads().size();i++) {
 			try {
 				this.map_of_roads.getRoads().get(i).advance(this.time_of_simulation);
 			} catch (Exception e) {
-				onError(e.getMessage());			
-				// se suopone que hay que lanzar la excepcion
+				////////INDICO A TODOS LOS OBSERVADORES QUE HAY UN ERROR //////
+				for(TrafficSimObserver o : this.listaObservadores){
+					o.onError(e.getMessage());					
+				}
+				
+				e.getMessage();
 			}
 		}
 		
-		onAdvanceEnd(this.map_of_roads,this.list_of_events,this.time_of_simulation);
+		for(TrafficSimObserver o : this.listaObservadores){
+			o.onAdvanceEnd(this.map_of_roads,this.list_of_events,this.time_of_simulation);
+		}
+		
+		
+	
 		
 	
 	}
@@ -82,7 +108,10 @@ public class TrafficSimulator implements Observable<TrafficSimObserver>  {
 		this.list_of_events.clear();	
 		this.time_of_simulation = 0;
 		
-		onReset(this.map_of_roads,this.list_of_events,this.time_of_simulation);
+		for (TrafficSimObserver o : this.listaObservadores) {
+			o.	onReset(this.map_of_roads,this.list_of_events,this.time_of_simulation);
+		}
+	
 	}
 	
 	
@@ -131,17 +160,19 @@ public class TrafficSimulator implements Observable<TrafficSimObserver>  {
 
 	@Override
 	public void addObserver(TrafficSimObserver o) {
+		this.listaObservadores.add(o);
 		
-		// depues de añadir el observer
-		onRegister(this.map_of_roads,this.list_of_events,this.time_of_simulation);
+		for(TrafficSimObserver e : this.listaObservadores){
+			e.onRegister(this.map_of_roads,this.list_of_events,this.time_of_simulation);
+		}
+	
 		
 	}
 
 	public void removeObserver(TrafficSimObserver o) {
-		// TODO Auto-generated method stub
+		this.listaObservadores.remove(o);
 		
 	}
 
- 
 
 }

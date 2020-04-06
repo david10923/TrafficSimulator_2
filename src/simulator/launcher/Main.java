@@ -21,7 +21,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 import Exceptions.InvalidArgumentException;
-import Vista.MainWindow;
+import simulator.Vista.MainWindow;
 import simulator.control.Controller;
 import simulator.factories.*;
 import simulator.model.*;
@@ -89,7 +89,7 @@ public class Main {
 		
 		cmdLineOptions.addOption(Option.builder("t").longOpt("ticks").hasArg().desc("Ticks to the simulatorï¿½s main loop").build());
 
-		///////AÑADIDO EL MODO DE VISUALIZACION////////
+		///////Aï¿½ADIDO EL MODO DE VISUALIZACION////////
 		cmdLineOptions.addOption(Option.builder("m").longOpt("mode").hasArg().desc("Mode of the app").build());
 		
 		return cmdLineOptions;
@@ -130,7 +130,7 @@ public class Main {
 		}
 		
 	}
-	///////////////AÑADIR LA OPCION -M MODE ////////////////////
+	///////////////Aï¿½ADIR LA OPCION -M MODE ////////////////////
 	private static void parseModeOption(CommandLine line) throws ParseException {
 		mode = line.getOptionValue("m"); // mode puede tener el valor de "gui" o el valor de "console"
 		if(mode == null) {

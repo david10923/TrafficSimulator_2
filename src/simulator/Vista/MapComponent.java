@@ -1,4 +1,4 @@
-package Vista;
+package simulator.Vista;
 
 import java.awt.Color;
 import java.awt.Dimension;
