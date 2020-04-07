@@ -1,16 +1,19 @@
 package simulator.Vista;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.border.TitledBorder;
 
 import simulator.control.Controller;
 
@@ -32,7 +35,7 @@ public class MainWindow extends JFrame  {
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		Dimension tamanio = tk.getScreenSize();
 		
-		this.setLocation((int)tamanio.getWidth()/6,(int)tamanio.getHeight()/6);
+		this.setLocation((int)tamanio.getWidth()/6,(int)tamanio.getHeight()/7);
 		
 		/////////AÑADES LA BARRA DE ARRIBA  Y LA DDE ABAJO //////
 		mainPanel .add( new ControlPanel( _ctrl ), BorderLayout. PAGE_START );
@@ -41,6 +44,7 @@ public class MainWindow extends JFrame  {
 		///////////AÑADES EL PANEL DE LA DERECHA  SOBRE EL PRINCIPAL ///////
 		JPanel viewsPanel = new JPanel( new GridLayout(1, 2));
 		mainPanel .add( viewsPanel , BorderLayout. CENTER );
+		
 		
 		
 		/////////AÑADES EL PANEL DE LA IZQUIERDA SOBRE EL PRINCIPAL /////
@@ -53,6 +57,7 @@ public class MainWindow extends JFrame  {
 		JPanel mapsPanel = new JPanel();
 		mapsPanel .setLayout( new BoxLayout( mapsPanel , BoxLayout. Y_AXIS ));
 		viewsPanel .add( mapsPanel );
+		
 		
 		
 		
@@ -86,10 +91,15 @@ public class MainWindow extends JFrame  {
 		JPanel mapView = createViewPanel( new MapComponent( _ctrl ), "Map" );
 			mapView .setPreferredSize( new Dimension(500, 400));
 			mapsPanel .add( mapView );
+			
 		
-		////////AÑADIR LA VISTA DE ABAJO A LA DERECHA ////
-		// TODO add a map for MapByRoadComponent
-		// ...
+		////////AÑADIR LA VISTA DE ABAJO A LA DERECHA ///			
+	//	JPanel mapByRoad = createViewPanel();
+	//	mapByRoad.setPreferredSize(new Dimension(500,400));
+	//	mapsPanel.add(mapByRoad);
+	
+			
+			
 		this .setDefaultCloseOperation(EXIT_ON_CLOSE);// DO_NOTHING_ON_CLOSE
 		this .pack();
 		this .setVisible( true );
@@ -99,7 +109,8 @@ public class MainWindow extends JFrame  {
 	
 		private JPanel createViewPanel(JComponent c , String title ) {
 				JPanel p = new JPanel( new BorderLayout() );
-				// TODO add a framed border to p with title
+				p.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1), title,
+						TitledBorder.LEFT, TitledBorder.TOP));
 				p .add( new JScrollPane( c ));
 		return p ;
 		}

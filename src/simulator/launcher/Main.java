@@ -104,9 +104,10 @@ public class Main {
 	}
 
 	private static void parseInFileOption(CommandLine line) throws ParseException {	
+		_inFile = line.getOptionValue("i");		
+		////// EL PARAMETRO -I ES OPCIONAL SI ES MODO GUI
 		
-		if(!mode.equalsIgnoreCase(guimode)){////// EL PARAMETRO -I ES OPCIONAL SI ES MODO GUI
-			_inFile = line.getOptionValue("i");			
+		if(!mode.equals(guimode)){
 			if (_inFile == null) { 
 				throw new ParseException("An events file is missing");			
 			}
@@ -196,14 +197,17 @@ public class Main {
 		
 		InputStream in = null;
 		
-		TrafficSimulator sim = new TrafficSimulator();
-		Controller ctrl;
 		
 		if(_inFile!= null) 
 			 in = new FileInputStream(new File(_inFile)); // hay que cargarlos solo si se proporciona
-			
+		
+		
+		Controller ctrl;		
+		TrafficSimulator sim = new TrafficSimulator();
+				
 		try {
 			ctrl = new Controller(sim, _eventsFactory);
+					
 			
 			if(_inFile != null) {
 				ctrl.loadEvents(in);
@@ -227,7 +231,7 @@ public class Main {
 		initFactories();
 		parseArgs(args);
 		
-		if(mode ==guimode) {
+		if(mode.equals(guimode)) {
 			startGUImode();
 		}else {
 			startBatchMode();

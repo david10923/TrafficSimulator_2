@@ -39,10 +39,6 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
 		
 	}
 	
-
-	
-
-
 	public void advance() {
 		this.time_of_simulation++;
 		
