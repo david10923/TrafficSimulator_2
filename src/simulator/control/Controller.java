@@ -50,7 +50,10 @@ public class Controller {
 		
 	}
 	
-	
+	public void run(int in){
+		this.run(in , null);
+		
+	}
 	
 	public void run (int in , OutputStream out ) {
 		int i =0;
@@ -58,26 +61,37 @@ public class Controller {
 		if (out == null) {
 			out = new OutputStream() {
 				@Override
-				public void write(int b) throws IOException {}
+				public void write(int b) throws IOException {
+					int j = 0;
+					while(j<in){
+						_sim.advance();
+						j++;
+					}
+					
+				}
 				};
 		}
-		
-		PrintStream p = new PrintStream(out);
-		p.println("{");
-		p.println(" \"states\": [");	
-		
-		while(i < in-1){
-			 _sim.advance();
-			 p.print(_sim.report());
-			 p.println(",");
-			 i++;
-		
+		else{
+			
+			PrintStream p = new PrintStream(out);
+			p.println("{");
+			p.println(" \"states\": [");	
+			
+			while(i < in-1){
+				 _sim.advance();
+				 p.print(_sim.report());
+				 p.println(",");
+				 i++;
+			
+			}
+			_sim.advance();
+			p.print(_sim.report());		
+			
+			p.println("]");
+			p.println("}");
+			
 		}
-		_sim.advance();
-		p.print(_sim.report());		
 		
-		p.println("]");
-		p.println("}");
 		
 	}
 	

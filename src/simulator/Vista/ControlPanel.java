@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingUtilities;
 
 import simulator.control.Controller;
 import simulator.model.Event;
@@ -39,7 +40,10 @@ public class ControlPanel extends JPanel implements TrafficSimObserver ,ActionLi
 	private JButton stop;
 	private JLabel ticks; 
 	private JSpinner numeroDeTicks; 
+	private JButton close;
 	
+	//HAY QUE COMPROBAR SI HAY QUUE PONER EL RUM SIM AQUI ////
+	private boolean _stopped = false ;
 	
 	public ControlPanel(Controller controller){
 		this.controller = controller;		
@@ -100,17 +104,58 @@ public class ControlPanel extends JPanel implements TrafficSimObserver ,ActionLi
 		
 		
 		/////////JTEXT FIELD DE LOS TICKS ////
-		this.numeroDeTicks = new JSpinner(new SpinnerNumberModel(0,0,147483647,1));// QUE NO ES UN JtEXTFIELD
+		this.numeroDeTicks = new JSpinner(new SpinnerNumberModel(0,0,147483647,1));
 		this.numeroDeTicks.setMaximumSize(new Dimension(60,40));
 		this.setVisible(true);
 		caja1.add(this.numeroDeTicks);
 		
-	
+		
+		
+		///BOTON DE CERRAR LA APP//
+		this.close = new JButton(new ImageIcon("resources/icons/exit.png"));		
+		this.close.setVisible(true);
+		this.close.addActionListener(this);
+		this.add(this.close,BorderLayout.EAST);	
+		
 		
 		
 		this.add(caja1);
 	}
 	
+	private void run_sim( int n ) {
+		if ( n > 0 && ! _stopped ) {
+			try {
+			controller.run(1);
+			} catch (Exception e ) {
+			// TODO show error message
+			_stopped = true ;
+			return ;
+			}
+		SwingUtilities.invokeLater( new Runnable() {
+		@Override
+		public void run() {
+			run_sim( n - 1);
+		}
+		});
+		} else {
+			enableToolBar( true );
+			_stopped = true ;
+		}
+		}
+	
+	
+		private void enableToolBar(boolean b) {
+			if(b){
+				this.fichero.setEnabled(false);
+				this.cambioContaminacion.setEnabled(false);
+				this.contaminacion.setEnabled(false);
+				this.play.setEnabled(false);
+			}
+		}
+
+	private void stop() {
+			_stopped = true ;
+	}
 	
 
 	@Override
@@ -185,14 +230,27 @@ public class ControlPanel extends JPanel implements TrafficSimObserver ,ActionLi
 			new ChangeCO2ClassDialog();
 		}
 		else if (botonPulsado == this.cambioContaminacion){
-			
+			new ChangeWeatherDialog();
 		}
 		else if (botonPulsado == this.play){
 			
-		}
-		else if(botonPulsado == this.stop){
+			this.run_sim((int)this.numeroDeTicks.getValue());
+			
+			this.fichero.setEnabled(true);
+			this.cambioContaminacion.setEnabled(true);
+			this.contaminacion.setEnabled(true);
+			this.play.setEnabled(true);
 			
 		}
-	}
+		else if(botonPulsado == this.stop){
+			this.stop();
+			
+		}
+		else if(botonPulsado == this.close){
+			new ExitOperation();
+		}
+			
+		}
+	
 
 }

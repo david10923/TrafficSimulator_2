@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Box;
@@ -12,32 +11,35 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
-import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
 import simulator.misc.Pair;
-import simulator.model.NewSetContClassEvent;
 import simulator.model.TrafficSimulator;
+import simulator.model.Vehicle;
 
-public class ChangeCO2ClassDialog extends JDialog implements ActionListener{
+public class ChangeWeatherDialog extends JDialog implements ActionListener {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	private JButton ok; 
 	private JButton cancelar ; 
 	private JLabel info ;
-	private JSpinner vehicle ; 
-	private JSpinner Co2Class;
+	private JSpinner road ; 
+	private JSpinner weather;
 	private JSpinner ticks; 
-	private JLabel infoVehicles; 
-	private JLabel infoCo2; 
+	private JLabel infoRoad; 
+	private JLabel infoweather; 
 	private JLabel infoTicks;
-	private String INFO= "Schedule an event to change the CO2 class of a vehicle after  a given number of simulation ticks from now.";
+	private String INFO= "Schedule an event to change the weather  of a road after  a given number of simulation ticks from now.";
 	
 	
 	private TrafficSimulator sim; 
-	List<Pair<String,Integer>> lista;
+
 	
-	public ChangeCO2ClassDialog (){
+	public ChangeWeatherDialog(){
 		iniciarVentana();
 		anadircomponentes();
 		
@@ -48,7 +50,7 @@ public class ChangeCO2ClassDialog extends JDialog implements ActionListener{
 		this.setBounds(400,300,650,150);
 		this.setVisible(true);	
 		this.setLayout(new FlowLayout());
-		this.setTitle("Change C02 Class");
+		this.setTitle("Change Road Weather");
 	
 	}
 	
@@ -61,20 +63,20 @@ public class ChangeCO2ClassDialog extends JDialog implements ActionListener{
 		this.add(this.info); 
 		
 		///LOS VEHICLES EN EL CENTRO /////
-		this.infoVehicles = new JLabel("Vehicles :");
-		this.vehicle = new JSpinner(); // COMO PONER V1
+		this.infoRoad = new JLabel("Road :");
+		this.road = new JSpinner(); //hay que poner r
 		caja.add(Box.createHorizontalStrut(100));
-		caja.add(this.infoVehicles); 
+		caja.add(this.infoRoad); 
 		caja.add(Box.createHorizontalStrut(4));
-		caja.add(this.vehicle);		
+		caja.add(this.road);		
 		caja.add(Box.createHorizontalStrut(10));
 		
 		//CO2 // 
-		this.infoCo2 = new JLabel("C02  Class :");
-		this.Co2Class = new JSpinner(new SpinnerNumberModel(0,0,10,1));
-		caja.add(this.infoCo2); 
+		this.infoweather = new JLabel("Weather :");
+		this.weather = new JSpinner(new SpinnerNumberModel(0,0,10,1));
+		caja.add(this.infoweather); 
 		caja.add(Box.createHorizontalStrut(4));
-		caja.add(this.Co2Class);	
+		caja.add(this.weather);	
 		caja.add(Box.createHorizontalStrut(10));
 		
 		
@@ -104,18 +106,8 @@ public class ChangeCO2ClassDialog extends JDialog implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Object botonPulsado = e.getSource();
+		Object botonPulsado  = e.getSource();
 		
-		if(botonPulsado ==this.cancelar){  
-			
-		}else if (botonPulsado == this.ok){
-			
-			/*
-			NewSetContClassEvent evento = new NewSetContClassEvent((int)this.ticks.getValue()
-					,new ArrayList<Pair<String,Integer>>(new Pair((String)this.vehicle.getName(),(int)this.Co2Class.getValue())));
-			sim.addEvent(evento);
-			 */
-		}
 		
 	}
 

@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 
 import simulator.control.Controller;
@@ -20,6 +21,8 @@ import simulator.control.Controller;
 public class MainWindow extends JFrame  {
 	
 	private Controller _ctrl ;
+
+	//private boolean _stopped ;
 	
 	public MainWindow(Controller ctrl ) {
 		super ( "Traffic Simulator" );
@@ -35,7 +38,7 @@ public class MainWindow extends JFrame  {
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		Dimension tamanio = tk.getScreenSize();
 		
-		this.setLocation((int)tamanio.getWidth()/6,(int)tamanio.getHeight()/7);
+		this.setLocation((int)tamanio.getWidth()/6,(int)tamanio.getHeight()/9);
 		
 		/////////AÑADES LA BARRA DE ARRIBA  Y LA DDE ABAJO //////
 		mainPanel .add( new ControlPanel( _ctrl ), BorderLayout. PAGE_START );
@@ -100,11 +103,49 @@ public class MainWindow extends JFrame  {
 	
 			
 			
-		this .setDefaultCloseOperation(EXIT_ON_CLOSE);// DO_NOTHING_ON_CLOSE
+		this .setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this .pack();
 		this .setVisible( true );
 		}
 	
+	
+	
+	/*
+	private void run_sim( int n ) {
+		if ( n > 0 && ! _stopped ) {
+			try {
+			_ctrl .run(1);
+			} catch (Exception e ) {
+			// TODO show error message
+			_stopped = true ;
+			return ;
+			}
+		SwingUtilities.invokeLater( new Runnable() {
+		@Override
+		public void run() {
+			run_sim( n - 1);
+		}
+		});
+		} else {
+			enableToolBar( true );
+			_stopped = true ;
+		}
+		}
+	
+	
+		private void enableToolBar(boolean b) {
+			if(b){
+				
+			}else{
+				
+			}
+		}
+
+
+		private void stop() {
+			_stopped = true ;
+		}
+	*/
 	
 	
 		private JPanel createViewPanel(JComponent c , String title ) {

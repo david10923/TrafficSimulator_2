@@ -31,8 +31,8 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
 	///////CADA VEZ QUE CMABIO ALGO SE  LO TENGO QUE NOTIFICAR A LOS OBSERVADORES PARA QUE HAGAN SUS CAMBIOS ///
 	
 	public void addEvent (Event e) {
-		this.list_of_events.add(e); 
-		////////INDICO A TODOS LOS OBSERVADORES QUE AÑADO UN EVENTO //////
+		this.list_of_events.add(e); ////////INDICO A TODOS LOS OBSERVADORES QUE AÑADO UN EVENTO //////
+		
 		for(TrafficSimObserver o : this.listaObservadores){
 			o.onEventAdded(this.map_of_roads,this.list_of_events,e,this.time_of_simulation);
 		}
@@ -151,6 +151,9 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
 	public void setTime_of_simulation(int time_of_simulation) {
 		this.time_of_simulation = time_of_simulation;
 	}
+	
+	
+	
 
 
 
