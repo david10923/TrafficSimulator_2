@@ -132,11 +132,11 @@ public class Controller {
 	}
 	
 	public void removeObserver(TrafficSimObserver o ){
-		this.removeObserver(o);
+		this._sim.removeObserver(o);
 	}
 	
 	public void addEvent(Event e){
-		this.addEvent(e);
+		this._sim.addEvent(e);
 	}
 	
 	

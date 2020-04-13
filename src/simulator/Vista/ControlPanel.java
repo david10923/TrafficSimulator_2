@@ -17,6 +17,7 @@ import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -30,7 +31,7 @@ import simulator.model.Event;
 import simulator.model.RoadMap;
 import simulator.model.TrafficSimObserver;
 
-public class ControlPanel extends JPanel implements TrafficSimObserver ,ActionListener {
+public class ControlPanel extends JPanel implements TrafficSimObserver {
 	
 	private Controller controller;
 	private JButton fichero; 
@@ -42,10 +43,16 @@ public class ControlPanel extends JPanel implements TrafficSimObserver ,ActionLi
 	private JSpinner numeroDeTicks; 
 	private JButton close;
 	
+	private ChangeCO2ClassDialog cambioCo2;// para la ventana emergente de contaminacion
+	private ChangeWeatherDialog cambioTiempo; // para la ventana emergente de tiempo 
+	
+	
 	//HAY QUE COMPROBAR SI HAY QUUE PONER EL RUM SIM AQUI ////
 	private boolean _stopped = false ;
 	
-	public ControlPanel(Controller controller){
+	
+	
+	 ControlPanel(Controller controller){
 		this.controller = controller;		
 		this.setLayout(new BorderLayout());
 		this.setVisible(true);
@@ -53,47 +60,116 @@ public class ControlPanel extends JPanel implements TrafficSimObserver ,ActionLi
 	}
 	
 	
-	public void inicializaComponentes(){
+	private void inicializaComponentes(){
 		Box caja1 = Box.createHorizontalBox();	
 		
 		//////BOTON QUE CUANDO PULSES SALDRA UN JFILECHOOSER////
 		this.fichero = new JButton (new ImageIcon("resources/icons/open.png"));// habria que pasarle por parametro el icono 
 		this.fichero.setVisible(true);
-		this.fichero.addActionListener(this);
-		caja1.add(fichero);
 		
+		this.fichero.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fc = new JFileChooser ();
+				
+				int respuesta  = fc.showOpenDialog(null); 
+				
+				if(respuesta == JFileChooser.APPROVE_OPTION){
+					File archivoElegido = fc.getSelectedFile();
+					File dir = new File("src/resources/examples"); /// HAY QUE PONER LA RUTA DEL SRC
+					fc.setCurrentDirectory(dir.getAbsoluteFile());
+					
+					controller.reset();
+					
+					InputStream in;
+					try {
+					// FALTA VER SI EL ARCHIVO EXISTE//////
+						in = new FileInputStream(archivoElegido);
+						controller.loadEvents(in); 
+					} catch (FileNotFoundException e1) {
+						
+						e1.getMessage();
+					}
+				
+				}
+			}
+			
+		});
+		
+		caja1.add(fichero);		
 		caja1.add(Box.createHorizontalStrut(5));
+		
+		//////////////////////////////////////////////////////////////////////////////////////////////
 		
 		////// BOTON DE CONTAMINACION////
 		this.contaminacion = new JButton(new ImageIcon("resources/icons/co2class.png"));// habria que pasarle por parametro el icono 
 		this.contaminacion.setVisible(true);
-		this.contaminacion.addActionListener(this);
+		this.contaminacion.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {				
+				setCambioCo2(new ChangeCO2ClassDialog());
+			}
+			
+		});
+		
 		caja1.add(contaminacion);		
 		caja1.add(Box.createHorizontalStrut(5));
+		
+		//////////////////////////////////////////////////////////////////////////////
 		
 		//BOTON DE CAMBIO DE CONTAMINACION ///		
 		this.cambioContaminacion = new JButton(new ImageIcon("resources/icons/weather.png"));
 		this.cambioContaminacion.setVisible(true);
-		this.cambioContaminacion.addActionListener(this);
+		this.cambioContaminacion.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {				
+				setCambioTiempo(new ChangeWeatherDialog());
+			}
+			
+		});
 		caja1.add(this.cambioContaminacion);		
 		caja1.add(Box.createHorizontalStrut(5));
 		
 		
+		////////////////////////////////////////////////////////////////////////////////////
+		
 		/////BOTON DEL PLAY //////
 		this.play= new JButton(new ImageIcon("resources/icons/run.png"));
 		this.play.setVisible(true);
-		this.cambioContaminacion.addActionListener(this);
+		this.cambioContaminacion.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				run_sim((int)numeroDeTicks.getValue());				
+				fichero.setEnabled(true);
+				cambioContaminacion.setEnabled(true);
+				contaminacion.setEnabled(true);
+				play.setEnabled(true);
+			}
+			
+		});
 		caja1.add(this.play); 		
 		caja1.add(Box.createHorizontalStrut(5));
 		
-		
+		///////////////////////////////////////////////////////////////////////////
 		
 		///BOTON DE STOP 
 		this.stop = new JButton(new ImageIcon("resources/icons/stop.png"));
 		this.stop.setVisible(true);
-		this.stop.addActionListener(this);
+		this.stop.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				stop();
+				
+			}
+			
+		});
 		caja1.add(this.stop);
 		caja1.add(Box.createHorizontalStrut(5));
+		
+		////////////////////////////////////////////////////////////////////////////////////
 		
 		/////////ETIQUETA DE LOS TICKS DEL SIMULADOR///
 		this.ticks = new JLabel("Ticks"); 
@@ -102,6 +178,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver ,ActionLi
 		caja1.add(this.ticks); 
 		caja1.add(Box.createHorizontalStrut(5));
 		
+		////////////////////////////////////////////////////////////////////////////////////
 		
 		/////////JTEXT FIELD DE LOS TICKS ////
 		this.numeroDeTicks = new JSpinner(new SpinnerNumberModel(0,0,147483647,1));
@@ -109,18 +186,37 @@ public class ControlPanel extends JPanel implements TrafficSimObserver ,ActionLi
 		this.setVisible(true);
 		caja1.add(this.numeroDeTicks);
 		
+		////////////////////////////////////////////////////////////////////////////////////
 		
+		///BOTON DE CERRAR LA APP///////////////////////////
 		
-		///BOTON DE CERRAR LA APP//
 		this.close = new JButton(new ImageIcon("resources/icons/exit.png"));		
 		this.close.setVisible(true);
-		this.close.addActionListener(this);
+		this.close.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent arg0) {
+				new ExitOperation();
+			}
+			
+		});
 		this.add(this.close,BorderLayout.EAST);	
-		
-		
-		
 		this.add(caja1);
+		
+		
+		
 	}
+	
+	private void dialogoCambioContaminacion(){
+		
+		
+		
+		
+	}
+	
+	private void dialogoCambioTiempo(){
+		
+	}
+	
 	
 	private void run_sim( int n ) {
 		if ( n > 0 && ! _stopped ) {
@@ -193,64 +289,36 @@ public class ControlPanel extends JPanel implements TrafficSimObserver ,ActionLi
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
+	
+	
+	///////GETTTER Y SETTERS/////////////////////////////////////////////////////
 
 
-	@Override
-	public void actionPerformed(ActionEvent e) { //////PREGUNTAR SI ESTÁ BIEN HECHO DE ESTA MANERA ////
-		Object botonPulsado = e.getSource();
-		
-		if(botonPulsado == this.fichero){ 
-			
-			JFileChooser fc = new JFileChooser ();
-			int respuesta  = fc.showOpenDialog(this); 
-			
-			if(respuesta == JFileChooser.APPROVE_OPTION){
-				File archivoElegido = fc.getSelectedFile();
-				File dir = new File("src/resources/examples"); /// HAY QUE PONER LA RUTA DEL SRC
-				fc.setCurrentDirectory(dir.getAbsoluteFile());
-				
-				controller.reset();
-				
-				InputStream in;
-				try {
-				// FALTA VER SI EL ARCHIVO EXISTE//////
-					in = new FileInputStream(archivoElegido);
-					controller.loadEvents(in); 
-				} catch (FileNotFoundException e1) {
-					
-					e1.getMessage();
-				}
-				
-				///// ¿ HAY QUE AÑADIR EL NOMBRE DEL FICHERO ELEGIODO ????///
-			}
-			
-			
-		}
-		else if (botonPulsado == this.contaminacion){
-			new ChangeCO2ClassDialog();
-		}
-		else if (botonPulsado == this.cambioContaminacion){
-			new ChangeWeatherDialog();
-		}
-		else if (botonPulsado == this.play){
-			
-			this.run_sim((int)this.numeroDeTicks.getValue());
-			
-			this.fichero.setEnabled(true);
-			this.cambioContaminacion.setEnabled(true);
-			this.contaminacion.setEnabled(true);
-			this.play.setEnabled(true);
-			
-		}
-		else if(botonPulsado == this.stop){
-			this.stop();
-			
-		}
-		else if(botonPulsado == this.close){
-			new ExitOperation();
-		}
-			
-		}
+	public ChangeCO2ClassDialog getCambioCo2() {
+		return cambioCo2;
+	}
+
+
+	public void setCambioCo2(ChangeCO2ClassDialog cambioCo2) {
+		this.cambioCo2 = cambioCo2;
+	}
+
+
+	public ChangeWeatherDialog getCambioTiempo() {
+		return cambioTiempo;
+	}
+
+
+	public void setCambioTiempo(ChangeWeatherDialog cambioTiempo) {
+		this.cambioTiempo = cambioTiempo;
+	}
+
+
+	
+
+	
 	
 
 }

@@ -17,7 +17,7 @@ import simulator.misc.Pair;
 import simulator.model.TrafficSimulator;
 import simulator.model.Vehicle;
 
-public class ChangeWeatherDialog extends JDialog implements ActionListener {
+public class ChangeWeatherDialog extends JDialog  {
 	
 	/**
 	 * 
@@ -29,14 +29,14 @@ public class ChangeWeatherDialog extends JDialog implements ActionListener {
 	private JLabel info ;
 	private JSpinner road ; 
 	private JSpinner weather;
-	private JSpinner ticks; 
+	private JSpinner ticks; 	
 	private JLabel infoRoad; 
 	private JLabel infoweather; 
 	private JLabel infoTicks;
 	private String INFO= "Schedule an event to change the weather  of a road after  a given number of simulation ticks from now.";
 	
 	
-	private TrafficSimulator sim; 
+	//private TrafficSimulator sim; 
 
 	
 	public ChangeWeatherDialog(){
@@ -93,22 +93,43 @@ public class ChangeWeatherDialog extends JDialog implements ActionListener {
 		////AÑADIR LOS BOTONES///
 		this.cancelar = new JButton("Cancelar");
 		this.add(this.cancelar,BorderLayout.SOUTH);
-		this.cancelar.addActionListener(this);
+		this.cancelar.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+			
+		});
+		
 		this.ok = new JButton("Ok");
 		this.add(this.ok);
-		this.cancelar.addActionListener(this);
+		this.ok.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) { // crear el evento 
+				
+				
+			}
+			
+		});
+	
 		
 		
 		
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);//salta exception aqui
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);//salta exception aqui
+	}
+	
+	
+
+	public JSpinner getTicks() {
+		return ticks;
 	}
 
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		Object botonPulsado  = e.getSource();
-		
-		
+	public void setTicks(JSpinner ticks) {
+		this.ticks = ticks;
 	}
+
 
 }
