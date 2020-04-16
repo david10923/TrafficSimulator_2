@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Box;
@@ -28,8 +29,10 @@ import javax.swing.SwingUtilities;
 
 import simulator.control.Controller;
 import simulator.model.Event;
+import simulator.model.Road;
 import simulator.model.RoadMap;
 import simulator.model.TrafficSimObserver;
+import simulator.model.Vehicle;
 
 public class ControlPanel extends JPanel implements TrafficSimObserver {
 	
@@ -108,7 +111,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {				
-				setCambioCo2(new ChangeCO2ClassDialog());
+				Selected_Vehicle();
 			}
 			
 		});
@@ -118,14 +121,14 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		
 		//////////////////////////////////////////////////////////////////////////////
 		
-		//BOTON DE CAMBIO DE CONTAMINACION ///		
+		//BOTON DE CAMBIO DE WEATHER ///		
 		this.cambioContaminacion = new JButton(new ImageIcon("resources/icons/weather.png"));
 		this.cambioContaminacion.setVisible(true);
 		this.cambioContaminacion.addActionListener(new ActionListener(){
 
 			@Override
-			public void actionPerformed(ActionEvent e) {				
-				setCambioTiempo(new ChangeWeatherDialog());
+			public void actionPerformed(ActionEvent e) {	//////////////////////// NO SE COMO VER SI SE HA PULSADO OK 
+				Selected_Road();
 			}
 			
 		});
@@ -206,18 +209,53 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		
 	}
 	
-	private void dialogoCambioContaminacion(){
+	///////METODOS PARA LOS JDIALOG ///////////////////
+	
+	public void Selected_Vehicle(){
+		ChangeCO2ClassDialog dialog = new ChangeCO2ClassDialog(this);
 		
+		List<Vehicle>vehicle = new ArrayList<Vehicle>();
 		
+		for(int i = 0; i < controller.get_sim().getMap_of_roads().getVehicles().size(); i++){
+			vehicle.add(new Vehicle("V"+i));
+		}
 		
+		int status = dialog.open(vehicle);
 		
+		if(status==0 ){
+			System.out.println("Canceled");			
+		}
+		else{
+			/// TE DEVUELVE LA CLASE  DE CO2 , EL VEHICULO Y LOS TICKS ///////
+			dialog.getCo2Class(); 
+			dialog.getVehicle();
+			dialog.getTicks();
+		}
 	}
 	
-	private void dialogoCambioTiempo(){
+	
+	public void Selected_Road(){
+		ChangeWeatherDialog dialog = new ChangeWeatherDialog(this);
 		
+		List<Road>road = new ArrayList<Road>();
+		
+		for(int i = 0; i < controller.get_sim().getMap_of_roads().getRoads().size(); i++){
+		//	road.add(new Road("r"+i));
+		}
+		
+		int status = dialog.open(road);
+		
+		if(status==0 ){
+			System.out.println("Canceled");			
+		}
+		else{
+			/// TE DEVUELVE LA CLASE  DE CO2 , EL VEHICULO Y LOS TICKS ///////
+			dialog.getTicks(); 
+			dialog.getWeather();
+			dialog.getRoad();
+		}
 	}
-	
-	
+
 	private void run_sim( int n ) {
 		if ( n > 0 && ! _stopped ) {
 			try {
@@ -230,7 +268,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		SwingUtilities.invokeLater( new Runnable() {
 		@Override
 		public void run() {
-			run_sim( n - 1);
+			run_sim(n-1);
 		}
 		});
 		} else {
@@ -289,8 +327,6 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
 	
 	
 	///////GETTTER Y SETTERS/////////////////////////////////////////////////////

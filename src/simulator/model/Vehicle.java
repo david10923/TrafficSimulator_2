@@ -63,6 +63,10 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 		}
 	}
 
+	public Vehicle(String id) {
+		super (id);
+	}
+
 	@Override
 	public void advance(int time)  {
 		int c = 0;

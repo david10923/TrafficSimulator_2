@@ -2,30 +2,41 @@ package simulator.Vista;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Box;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
+import extra.dialog.Dish;
 import simulator.misc.Pair;
 import simulator.model.NewSetContClassEvent;
 import simulator.model.TrafficSimulator;
+import simulator.model.Vehicle;
 
 public class ChangeCO2ClassDialog extends JDialog {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private JButton ok; 
 	private JButton cancelar ; 
-	private JLabel info ;
-	private JSpinner vehicle ; 
+	private JLabel info ;	 
 	private JSpinner Co2Class;
 	private JSpinner ticks; 
 	private JLabel infoVehicles; 
@@ -34,21 +45,21 @@ public class ChangeCO2ClassDialog extends JDialog {
 	private String INFO= "Schedule an event to change the CO2 class of a vehicle after  a given number of simulation ticks from now.";
 	
 	
-	//private TrafficSimulator sim; 
+	private int status;
+	private JComboBox<Vehicle> vehicle ;
+	private DefaultComboBoxModel<Vehicle> vehicleModel ;
 	
 	
-	List<Pair<String,Integer>> lista;
-	
-	
-
-	 ChangeCO2ClassDialog (){
+	 ChangeCO2ClassDialog(JPanel controlPanel){
+		 super();
 		iniciarVentana();
 		anadircomponentes();
 		
 	}
 	
 	
-	public void iniciarVentana(){
+
+	private void iniciarVentana(){
 		this.setBounds(400,300,650,150);
 		this.setVisible(true);	
 		this.setLayout(new FlowLayout());
@@ -56,7 +67,7 @@ public class ChangeCO2ClassDialog extends JDialog {
 	
 	}
 	
-	public void anadircomponentes(){
+	private void anadircomponentes(){
 		
 		Box caja = Box.createHorizontalBox();
 		
@@ -66,9 +77,16 @@ public class ChangeCO2ClassDialog extends JDialog {
 		
 		//////////////////////////////////////////////////////////
 		
+		//// EJEMPLO PARECIDO EN EL EXTRA JDIALOG////
 		///LOS VEHICLES EN EL CENTRO /////
 		this.infoVehicles = new JLabel("Vehicles :");
-		this.vehicle = new JSpinner(); // COMO PONER V1
+		
+		this.vehicleModel  = new DefaultComboBoxModel<>();
+		this.vehicle = new JComboBox<>(this.vehicleModel); 
+		
+		this.add(this.vehicle);
+		
+		
 		caja.add(Box.createHorizontalStrut(100));
 		caja.add(this.infoVehicles); 
 		caja.add(Box.createHorizontalStrut(4));
@@ -108,7 +126,8 @@ public class ChangeCO2ClassDialog extends JDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				status = 0;
+				ChangeCO2ClassDialog.this.setVisible(false);
 				
 			}
 			
@@ -120,8 +139,12 @@ public class ChangeCO2ClassDialog extends JDialog {
 		this.cancelar.addActionListener(new ActionListener (){
 
 			@Override
-			public void actionPerformed(ActionEvent e) {// creas el evento 
-				
+			public void actionPerformed(ActionEvent e) {
+				if(vehicleModel.getSelectedItem() != null){
+					status = 1; 
+					ChangeCO2ClassDialog.this.setVisible(false);
+				}
+					
 				
 			}
 			
@@ -129,8 +152,29 @@ public class ChangeCO2ClassDialog extends JDialog {
 		});
 		
 		
-		
+		//pack();
+		setResizable(false);
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);//salta exception aqui
+	}
+	
+	public int open(List<Vehicle> vehicles){
+		
+		this.vehicleModel.removeAllElements();
+		
+		for (Vehicle v : vehicles){
+			this.vehicleModel.addElement(v);
+		}
+		
+		//setLocation(getParent().getLocation().x +10 , getParent().getLocation().y+10);
+		setVisible(true);
+		
+		return status;
+	}
+	
+	
+	
+	Vehicle getVehicle(){
+		return (Vehicle) vehicleModel.getSelectedItem();
 	}
 
 	

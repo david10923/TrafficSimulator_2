@@ -30,7 +30,7 @@ public class StatusBar extends JPanel implements TrafficSimObserver {
 	public void  inicializa(){
 		
 		//ETIQUETA PARA EL TIMEPO DE EJECUCION ///
-		this.ticks = new JLabel ("Ticks : "+controller.get_sim().getTime_of_simulation());
+		this.ticks = new JLabel ("Ticks : "+ controller.get_sim().getTime_of_simulation());
 		this.ticks.setSize(new Dimension(10,5));
 		this.ticks.setVisible(true);
 		this.add(this.ticks,BorderLayout.WEST);

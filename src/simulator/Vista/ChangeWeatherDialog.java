@@ -7,15 +7,20 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.Box;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
 import simulator.misc.Pair;
+import simulator.model.Road;
 import simulator.model.TrafficSimulator;
 import simulator.model.Vehicle;
+import simulator.model.Weather;
 
 public class ChangeWeatherDialog extends JDialog  {
 	
@@ -27,26 +32,29 @@ public class ChangeWeatherDialog extends JDialog  {
 	private JButton ok; 
 	private JButton cancelar ; 
 	private JLabel info ;
-	private JSpinner road ; 
-	private JSpinner weather;
 	private JSpinner ticks; 	
 	private JLabel infoRoad; 
 	private JLabel infoweather; 
 	private JLabel infoTicks;
 	private String INFO= "Schedule an event to change the weather  of a road after  a given number of simulation ticks from now.";
 	
-	
-	//private TrafficSimulator sim; 
 
+	private int status; 
+	private JComboBox<Road> road ;
+	private DefaultComboBoxModel<Road> roadModel ;
 	
-	public ChangeWeatherDialog(){
+	private JComboBox<Weather> weather;
+	private DefaultComboBoxModel<Weather> weatherModel;
+	
+	public ChangeWeatherDialog(JPanel controlPanel){
+		super();
 		iniciarVentana();
 		anadircomponentes();
 		
 	}
 	
 	
-	public void iniciarVentana(){
+	private  void iniciarVentana(){
 		this.setBounds(400,300,650,150);
 		this.setVisible(true);	
 		this.setLayout(new FlowLayout());
@@ -54,7 +62,7 @@ public class ChangeWeatherDialog extends JDialog  {
 	
 	}
 	
-	public void anadircomponentes(){
+	private void anadircomponentes(){
 		
 		Box caja = Box.createHorizontalBox();
 		
@@ -64,7 +72,11 @@ public class ChangeWeatherDialog extends JDialog  {
 		
 		///LOS VEHICLES EN EL CENTRO /////
 		this.infoRoad = new JLabel("Road :");
-		this.road = new JSpinner(); //hay que poner r
+		this.roadModel = new DefaultComboBoxModel<>();
+		this.road = new JComboBox<>(this.roadModel);
+		
+		this.add(this.road);
+		
 		caja.add(Box.createHorizontalStrut(100));
 		caja.add(this.infoRoad); 
 		caja.add(Box.createHorizontalStrut(4));
@@ -73,7 +85,11 @@ public class ChangeWeatherDialog extends JDialog  {
 		
 		//CO2 // 
 		this.infoweather = new JLabel("Weather :");
-		this.weather = new JSpinner(new SpinnerNumberModel(0,0,10,1));
+		this.weatherModel = new DefaultComboBoxModel<>();
+		this.weather = new JComboBox<>(this.weatherModel);
+		
+		this.add(this.weather);
+		
 		caja.add(this.infoweather); 
 		caja.add(Box.createHorizontalStrut(4));
 		caja.add(this.weather);	
@@ -97,7 +113,8 @@ public class ChangeWeatherDialog extends JDialog  {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				status = 0;
+				ChangeWeatherDialog.this.setVisible(false);
 			}
 			
 		});
@@ -107,21 +124,51 @@ public class ChangeWeatherDialog extends JDialog  {
 		this.ok.addActionListener(new ActionListener(){
 
 			@Override
-			public void actionPerformed(ActionEvent e) { // crear el evento 
+			public void actionPerformed(ActionEvent e) {
+				if(weatherModel.getSelectedItem() != null){
+					status = 1;
+					ChangeWeatherDialog.this.setVisible(false);
+				}
 				
 				
 			}
 			
 		});
-	
 		
-		
-		
+		this.setResizable(false);
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);//salta exception aqui
 	}
 	
 	
+	/////// POR SI CAMBIAN LOS ELEMENTOS DEL JCOMBOBOX , DEL WEATHER NO SE HARIA YA QUE SIEMPRE ESTAN LOS MISMOS //
+	
+	public int open(List<Road> roads){
+		
+		this.roadModel.removeAllElements();
+		
+		for (Road r : roads){
+			this.roadModel.addElement(r);
+		}
+		
+		//setLocation(getParent().getLocation().x +10 , getParent().getLocation().y+10);
+		setVisible(true);
+		
+		return status;
+	}
+		
+	
+	
+	//////// METODOS ANADIDOS PARA LUEGO PODER COGER LA INFORMACION EN EL CONTROL PANEL /////
 
+	Road getRoad(){
+		return (Road) roadModel.getSelectedItem();
+	}
+	
+	Weather getWeather(){
+		return (Weather) weatherModel.getSelectedItem();
+	}
+	
+	
 	public JSpinner getTicks() {
 		return ticks;
 	}

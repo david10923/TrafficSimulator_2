@@ -50,6 +50,7 @@ public class DialogWindowExample extends JFrame {
 		MyDialogWindow dialog = new MyDialogWindow(this);
 
 		List<Dish> dishes = new ArrayList<Dish>();
+		
 		for (int i = 0; i < 10; i++) {
 			dishes.add(new Dish("Yum Yum " + i));
 		}
