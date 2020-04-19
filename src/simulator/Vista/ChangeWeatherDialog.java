@@ -40,8 +40,8 @@ public class ChangeWeatherDialog extends JDialog  {
 	
 
 	private int status; 
-	private JComboBox<Road> road ;
-	private DefaultComboBoxModel<Road> roadModel ;
+	private JComboBox<String> road ;
+	private DefaultComboBoxModel<String> roadModel ;
 	
 	private JComboBox<Weather> weather;
 	private DefaultComboBoxModel<Weather> weatherModel;
@@ -142,11 +142,11 @@ public class ChangeWeatherDialog extends JDialog  {
 	
 	/////// POR SI CAMBIAN LOS ELEMENTOS DEL JCOMBOBOX , DEL WEATHER NO SE HARIA YA QUE SIEMPRE ESTAN LOS MISMOS //
 	
-	public int open(List<Road> roads){
+	public int open(List<String> roads){
 		
 		this.roadModel.removeAllElements();
 		
-		for (Road r : roads){
+		for (String r : roads){
 			this.roadModel.addElement(r);
 		}
 		
@@ -160,8 +160,8 @@ public class ChangeWeatherDialog extends JDialog  {
 	
 	//////// METODOS ANADIDOS PARA LUEGO PODER COGER LA INFORMACION EN EL CONTROL PANEL /////
 
-	Road getRoad(){
-		return (Road) roadModel.getSelectedItem();
+	String getRoad(){
+		return roadModel.getSelectedItem().toString();
 	}
 	
 	Weather getWeather(){

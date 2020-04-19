@@ -197,7 +197,6 @@ public class Main {
 		
 		InputStream in = null;
 		
-		
 		if(_inFile!= null) 
 			 in = new FileInputStream(new File(_inFile)); // hay que cargarlos solo si se proporciona
 		
@@ -206,12 +205,13 @@ public class Main {
 		TrafficSimulator sim = new TrafficSimulator();
 				
 		try {
-			ctrl = new Controller(sim, _eventsFactory);
-					
+			ctrl = new Controller(sim, _eventsFactory);				
 			
 			if(_inFile != null) {
 				ctrl.loadEvents(in);
 			}			
+			
+			//ctrl.run(_timeLimit,null);
 			
 			SwingUtilities.invokeLater(new Runnable() {
 				public void run () {

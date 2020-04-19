@@ -46,8 +46,8 @@ public class ChangeCO2ClassDialog extends JDialog {
 	
 	
 	private int status;
-	private JComboBox<Vehicle> vehicle ;
-	private DefaultComboBoxModel<Vehicle> vehicleModel ;
+	private JComboBox<String> vehicle ;
+	private DefaultComboBoxModel<String> vehicleModel ;
 	
 	
 	 ChangeCO2ClassDialog(JPanel controlPanel){
@@ -157,11 +157,11 @@ public class ChangeCO2ClassDialog extends JDialog {
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);//salta exception aqui
 	}
 	
-	public int open(List<Vehicle> vehicles){
+	public int open(List<String> vehicles){
 		
 		this.vehicleModel.removeAllElements();
 		
-		for (Vehicle v : vehicles){
+		for (String v : vehicles){
 			this.vehicleModel.addElement(v);
 		}
 		
@@ -173,8 +173,8 @@ public class ChangeCO2ClassDialog extends JDialog {
 	
 	
 	
-	Vehicle getVehicle(){
-		return (Vehicle) vehicleModel.getSelectedItem();
+	String getVehicle(){
+		return  vehicleModel.getSelectedItem().toString();
 	}
 
 	

@@ -50,7 +50,6 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	private ChangeWeatherDialog cambioTiempo; // para la ventana emergente de tiempo 
 	
 	
-	//HAY QUE COMPROBAR SI HAY QUUE PONER EL RUM SIM AQUI ////
 	private boolean _stopped = false ;
 	
 	
@@ -141,7 +140,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		/////BOTON DEL PLAY //////
 		this.play= new JButton(new ImageIcon("resources/icons/run.png"));
 		this.play.setVisible(true);
-		this.cambioContaminacion.addActionListener(new ActionListener(){
+		this.play.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				run_sim((int)numeroDeTicks.getValue());				
@@ -214,10 +213,10 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	public void Selected_Vehicle(){
 		ChangeCO2ClassDialog dialog = new ChangeCO2ClassDialog(this);
 		
-		List<Vehicle>vehicle = new ArrayList<Vehicle>();
+		List<String>vehicle = new ArrayList<String>();
 		
 		for(int i = 0; i < controller.get_sim().getMap_of_roads().getVehicles().size(); i++){
-			vehicle.add(new Vehicle("V"+i));
+			vehicle.add(controller.get_sim().getMap_of_roads().getVehicles().toString());
 		}
 		
 		int status = dialog.open(vehicle);
@@ -237,10 +236,10 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	public void Selected_Road(){
 		ChangeWeatherDialog dialog = new ChangeWeatherDialog(this);
 		
-		List<Road>road = new ArrayList<Road>();
+		List<String>road = new ArrayList<String>();
 		
 		for(int i = 0; i < controller.get_sim().getMap_of_roads().getRoads().size(); i++){
-		//	road.add(new Road("r"+i));
+			road.add(controller.get_sim().getMap_of_roads().getRoads().toString());
 		}
 		
 		int status = dialog.open(road);
@@ -259,7 +258,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	private void run_sim( int n ) {
 		if ( n > 0 && ! _stopped ) {
 			try {
-			controller.run(1);
+				controller.run(1);
 			} catch (Exception e ) {
 			// TODO show error message
 			_stopped = true ;

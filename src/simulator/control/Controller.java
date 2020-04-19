@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -11,9 +13,12 @@ import org.json.JSONTokener;
 
 import Exceptions.InvalidArgumentException;
 import simulator.factories.Factory;
+import simulator.misc.Pair;
 import simulator.model.Event;
+import simulator.model.NewSetContClassEvent;
 import simulator.model.TrafficSimObserver;
 import simulator.model.TrafficSimulator;
+import simulator.model.Weather;
 
 public class Controller {
 	
@@ -33,8 +38,6 @@ public class Controller {
 		
 	
 	}
-	
-	
 	
 	public void loadEvents(InputStream in ) {
 		
@@ -125,6 +128,34 @@ public class Controller {
 	
 	
 	
+	///FUNCIONES PARA INTERMEDIAR ENTRE LA VISTA Y EL MODELO 
+	
+	public void crearEventoContaminacion(String id , int time,int CO2){
+		 List<Pair<String,Integer>>cs = new ArrayList<Pair<String,Integer>>();// lista de pares 
+		 cs.add(new Pair<String,Integer>(id,CO2));
+		 
+		try {
+			Event evento = new NewSetContClassEvent(time,cs);
+			this._sim.addEvent(evento);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		
+		
+	}
+	
+	public void crearEventoTiempo(String id ,Weather w , int ticks){
+		try {
+			this._sim.getMap_of_roads().getRoad(id).setWeather(w);
+			//this._sim.addEvent();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.getMessage();
+		}
+		
+	}
+	
+	
 	///////EL CONTROLADOR ACTUA SOBRE EL MODELO ///////
 	
 	public void addObserver(TrafficSimObserver o ){
@@ -138,9 +169,5 @@ public class Controller {
 	public void addEvent(Event e){
 		this._sim.addEvent(e);
 	}
-	
-	
-	
-	
 	
 }

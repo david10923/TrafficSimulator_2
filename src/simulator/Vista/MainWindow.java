@@ -67,6 +67,11 @@ public class MainWindow extends JFrame  {
 		///////AÑADES LA TABLA DE LOS EVENTOS /////////
 		JPanel eventsView =
 		createViewPanel( new JTable( new EventsTableModel( _ctrl )), "Events" );
+		//////// SCROLL PARA LOS EVENTOS , NO SE SI HAY QUE PONERLO 
+		
+		eventsView.add(new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED));
+		
 		eventsView .setPreferredSize( new Dimension(500, 200));
 		tablesPanel .add( eventsView );
 		
