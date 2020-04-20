@@ -46,7 +46,7 @@ public class MainWindow extends JFrame  {
 		
 		///////////AÑADES EL PANEL DE LA DERECHA  SOBRE EL PRINCIPAL ///////
 		JPanel viewsPanel = new JPanel( new GridLayout(1, 2));
-		mainPanel .add( viewsPanel , BorderLayout. CENTER );
+		mainPanel .add( viewsPanel , BorderLayout.CENTER );
 		
 		
 		
@@ -102,9 +102,9 @@ public class MainWindow extends JFrame  {
 			
 		
 		////////AÑADIR LA VISTA DE ABAJO A LA DERECHA ///			
-	//	JPanel mapByRoad = createViewPanel();
-	//	mapByRoad.setPreferredSize(new Dimension(500,400));
-	//	mapsPanel.add(mapByRoad);
+		JPanel mapByRoad = createViewPanel(new MapByRoadComponent(_ctrl),"Map by Road");
+		mapByRoad.setPreferredSize(new Dimension(300,200));
+		mapsPanel.add(mapByRoad);
 	
 			
 			

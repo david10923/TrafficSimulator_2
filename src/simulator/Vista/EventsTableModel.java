@@ -16,17 +16,12 @@ import simulator.model.TrafficSimObserver;
 
 public class EventsTableModel extends AbstractTableModel implements TrafficSimObserver {
 	
-	private Controller controller;
-	
-	
+
 	private List<Event>_events;	
 	private String[] _colNames = { "Time", "Desc." };
 	
-	
-
-	public EventsTableModel(Controller _ctrl) {
-		this.controller=_ctrl; 
-		this.controller.addObserver(this);
+	public EventsTableModel(Controller _ctrl) {	
+		_ctrl.addObserver(this);
 	}
 	
 	@Override

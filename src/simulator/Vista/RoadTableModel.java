@@ -14,11 +14,10 @@ import simulator.model.TrafficSimObserver;
 
 public class RoadTableModel extends AbstractTableModel implements TrafficSimObserver {
 
-	private Controller Controller; 
 	
-	RoadTableModel(Controller controller){
-		this.Controller = controller;
-		this.Controller.addObserver(this);
+	
+	RoadTableModel(Controller controller){		
+		controller.addObserver(this);
 	}
 
 	@Override
@@ -53,7 +52,7 @@ public class RoadTableModel extends AbstractTableModel implements TrafficSimObse
 
 	@Override
 	public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
-		// TODO Auto-generated method stub
+	
 		
 	}
 
