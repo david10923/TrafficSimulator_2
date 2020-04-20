@@ -143,11 +143,9 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		this.play.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				enableToolBar(false);
 				run_sim((int)numeroDeTicks.getValue());				
-				fichero.setEnabled(true);
-				cambioContaminacion.setEnabled(true);
-				contaminacion.setEnabled(true);
-				play.setEnabled(true);
+				
 			}
 			
 		});
@@ -264,26 +262,27 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 			_stopped = true ;
 			return ;
 			}
-		SwingUtilities.invokeLater( new Runnable() {
-		@Override
-		public void run() {
-			run_sim(n-1);
+			SwingUtilities.invokeLater( new Runnable() {
+				@Override
+				public void run() {
+					run_sim(n-1);
+				}
+			});
 		}
-		});
-		} else {
+		else {
 			enableToolBar( true );
 			_stopped = true ;
 		}
-		}
+	}
 	
 	
 		private void enableToolBar(boolean b) {
-			if(b){
-				this.fichero.setEnabled(false);
-				this.cambioContaminacion.setEnabled(false);
-				this.contaminacion.setEnabled(false);
-				this.play.setEnabled(false);
-			}
+			//if(b){
+				this.fichero.setEnabled(b);
+				this.cambioContaminacion.setEnabled(b);
+				this.contaminacion.setEnabled(b);
+				this.play.setEnabled(b);
+			//}
 		}
 
 	private void stop() {

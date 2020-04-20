@@ -209,6 +209,7 @@ public class Main {
 			
 			if(_inFile != null) {
 				ctrl.loadEvents(in);
+				
 			}			
 			
 			//ctrl.run(_timeLimit,null);

@@ -1,7 +1,10 @@
 package simulator.Vista;
 
+import java.awt.Frame;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
@@ -16,19 +19,16 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 	private Controller controller;
 	
 	
-	private List<Event>_events;
-	
+	private List<Event>_events;	
 	private String[] _colNames = { "Time", "Desc." };
 	
 	
 
 	public EventsTableModel(Controller _ctrl) {
 		this.controller=_ctrl; 
+		this.controller.addObserver(this);
 	}
 	
-	
-	
-
 	@Override
 	public int getColumnCount() {
 		return _colNames.length;
@@ -55,7 +55,13 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 		}
 		return s;
 	}
-
+	
+	@Override
+	public String getColumnName(int col) {
+		return _colNames[col];
+	}
+	
+	
 	@Override
 	public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
 		// TODO Auto-generated method stub
@@ -70,8 +76,18 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 
 	@Override
 	public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) { // para notificar que los datos de la tabla han cambiado
-		this._events = events; 	
-		fireTableDataChanged();
+		try{
+			this._events = events; 			
+			fireTableDataChanged();			
+		}
+		catch(Exception exp ){
+			JOptionPane.showMessageDialog( 
+					null, "Something went wrong ...",
+					"ERROR", //
+					JOptionPane.ERROR_MESSAGE);
+			
+		}
+		
 		
 	}
 

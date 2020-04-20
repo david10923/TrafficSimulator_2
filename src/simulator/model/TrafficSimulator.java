@@ -88,6 +88,7 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
 			}
 		}
 		
+		
 		for(TrafficSimObserver o : this.listaObservadores){
 			o.onAdvanceEnd(this.map_of_roads,this.list_of_events,this.time_of_simulation);
 		}

@@ -17,7 +17,8 @@ public class RoadTableModel extends AbstractTableModel implements TrafficSimObse
 	private Controller Controller; 
 	
 	RoadTableModel(Controller controller){
-		this.Controller = controller; 
+		this.Controller = controller;
+		this.Controller.addObserver(this);
 	}
 
 	@Override

@@ -17,6 +17,7 @@ public class JunctionTableModel extends AbstractTableModel implements TrafficSim
 	
 	public JunctionTableModel(Controller _ctrl) {
 		this.controller = _ctrl ;
+		this.controller.addObserver(this);
 	}
 
 	

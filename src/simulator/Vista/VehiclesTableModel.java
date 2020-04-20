@@ -16,8 +16,8 @@ public class VehiclesTableModel extends AbstractTableModel implements  TrafficSi
 	private Controller controller; 
 	
 	public VehiclesTableModel(Controller controller){
-		this.controller = controller; 
-		
+		this.controller = controller;
+		this.controller.addObserver(this);		
 	}
 
 	

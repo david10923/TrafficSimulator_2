@@ -59,10 +59,13 @@ public class Controller {
 	}
 	
 	public void run (int in , OutputStream out ) {
-		int i =0;
+		int i =0 , j =0; 
 		
 		if (out == null) {
-			out = new OutputStream() {
+			
+			/*
+			 out = new OutputStream() {
+		
 				@Override
 				public void write(int b) throws IOException {
 					int j = 0;
@@ -72,7 +75,12 @@ public class Controller {
 					}
 					
 				}
-				};
+			};
+				 */
+			
+			
+				_sim.advance();
+			
 		}
 		else{
 			
@@ -97,6 +105,8 @@ public class Controller {
 		
 		
 	}
+	
+	
 	
 	
 	public void reset () {

@@ -115,6 +115,7 @@ public class JTableExamples extends JFrame {
 	}
 
 	public void addEvent() {
+		
 		try {
 			Integer time = (Integer) _time.getValue();
 			Integer priority = (Integer) _priotiry.getSelectedItem();
@@ -136,6 +137,7 @@ public class JTableExamples extends JFrame {
 					"ERROR", //
 					JOptionPane.ERROR_MESSAGE);
 		}
+		
 	}
 
 	public static void main(String[] args) {
