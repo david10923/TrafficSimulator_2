@@ -59,13 +59,24 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 	
 	@Override
 	public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
+		try{
+			this._events = events; 			
+			fireTableDataChanged();			
+		}
+		catch(Exception exp ){
+			JOptionPane.showMessageDialog( 
+					null, "Something went wrong ...",
+					"ERROR", //
+					JOptionPane.ERROR_MESSAGE);
+			
+		}
+
 		
 	}
 
@@ -88,7 +99,17 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 
 	@Override
 	public void onReset(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
+		try{
+			this._events = events; 			
+			fireTableDataChanged();			
+		}
+		catch(Exception exp ){
+			JOptionPane.showMessageDialog( 
+					null, "Something went wrong ...",
+					"ERROR", //
+					JOptionPane.ERROR_MESSAGE);
+			
+		}
 		
 	}
 

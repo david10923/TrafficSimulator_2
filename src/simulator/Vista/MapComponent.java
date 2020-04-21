@@ -113,6 +113,7 @@ public class MapComponent extends JPanel implements TrafficSimObserver {
 				int y1 = r.getSrc().getY();
 				int x2 = r.getDest().getX();
 				int y2 = r.getDest().getY();
+				
 				double roadLength = Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
 				double alpha = Math.atan(((double) Math.abs(x1 - x2)) / ((double) Math.abs(y1 - y2)));
 				double relLoc = roadLength * ((double) v.getLocalization()) / ((double) r.getLength());
@@ -143,6 +144,7 @@ public class MapComponent extends JPanel implements TrafficSimObserver {
 			// (x,y) are the coordinates of the junction
 			int x = j.getX();
 			int y = j.getY();
+			
 
 			// draw a circle with center at (x,y) with radius _JRADIUS
 			g.setColor(_JUNCTION_COLOR);

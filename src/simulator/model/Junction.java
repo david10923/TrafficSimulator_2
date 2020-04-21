@@ -38,8 +38,10 @@ public class Junction extends SimulatedObject {
 			throw new InvalidArgumentException("There are some negatives values while creating");
 		} else {
 
-			this.setyCoor(xCoor);
-			this.setyCoor(yCoor);
+			//this.setyCoor(xCoor);
+			//this.setyCoor(yCoor);
+			this.xCoor = xCoor; 
+			this.yCoor = yCoor;
 
 			this.OutgoingRoadList = new HashMap<Junction, Road>();
 			this.QueueList = new ArrayList<List<Vehicle>>();

@@ -59,27 +59,20 @@ public class Controller {
 	}
 	
 	public void run (int in , OutputStream out ) {
-		int i =0 , j =0; 
+		int i =0;
 		
 		if (out == null) {
-			
-			/*
 			 out = new OutputStream() {
 		
 				@Override
 				public void write(int b) throws IOException {
-					int j = 0;
-					while(j<in){
-						_sim.advance();
-						j++;
-					}
+				
+						
 					
 				}
 			};
-			*/
 			
-			
-				_sim.advance();
+			_sim.advance();
 			
 		}
 		else{

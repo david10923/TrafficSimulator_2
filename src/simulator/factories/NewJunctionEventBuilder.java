@@ -1,5 +1,6 @@
 package simulator.factories;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import simulator.model.DequeingStrategy;
@@ -9,7 +10,7 @@ import simulator.model.NewJunctionEvent;
 
 public class NewJunctionEventBuilder extends Builder<Event>{
 	private static String type= "new_junction";
-	private final int CERO = 1; 
+	private final int CERO = 0; 
 	private final int ONE = 1;
 	private Factory<LightSwitchingStrategy> lssFactory; 
 	private Factory<DequeingStrategy> dqsFactory;
@@ -27,14 +28,17 @@ public class NewJunctionEventBuilder extends Builder<Event>{
 
 	@Override
 	protected Event createTheInstance(JSONObject data) {
+		JSONArray CoorList;
 	
 		Event e;
 		
 		if(data.has("time") && data.has("id") && data.has("coor") && data.has("ls_strategy") && data.has("dq_strategy")) {
-			
+			CoorList = data.getJSONArray("coor");
+						
 			e = new NewJunctionEvent(data.getInt("time"),data.getString("id"),
 					this.lssFactory.createInstance(data.getJSONObject("ls_strategy")), this.dqsFactory.createInstance(data.getJSONObject("dq_strategy")),
-						data.getJSONArray("coor").getInt(CERO), data.getJSONArray("coor").getInt(ONE));
+					 CoorList.getInt(CERO),CoorList.getInt(ONE));
+						
 				
 		}
 		else {			

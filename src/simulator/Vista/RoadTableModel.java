@@ -9,32 +9,34 @@ import simulator.control.Controller;
 import simulator.model.Event;
 import simulator.model.RoadMap;
 import simulator.model.TrafficSimObserver;
+import simulator.model.Vehicle;
 
 
 
 public class RoadTableModel extends AbstractTableModel implements TrafficSimObserver {
 
+	Controller controller ;
+	
+	private String[] _colNames = { "Id","Location","Itinerary","CO2 Class","Max Speed","Speed","Total CO2","Distance" };
+	private List<Vehicle>vehicles;	
 	
 	
 	RoadTableModel(Controller controller){		
-		controller.addObserver(this);
+		//this.controller.addObserver(this);
 	}
 
 	@Override
 	public int getColumnCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return _colNames.length;
 	}
 
 	@Override
 	public int getRowCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return vehicles == null ? 0 : vehicles.size();
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
