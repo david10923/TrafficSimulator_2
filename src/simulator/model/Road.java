@@ -238,7 +238,17 @@ public abstract class Road extends SimulatedObject {
 	}
 
 
+	public Weather getEnviromental_Conditions(){
+		return environmental_conditions;
+	}
 
+	public int getMax_Speed(){
+		return Max_Speed;
+	}
+	
+	public int getCurrent_Max_Speed(){
+		return Current_Max_Speed_limit;
+	}
 
 	
 

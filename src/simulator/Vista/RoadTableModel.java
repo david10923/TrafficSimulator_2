@@ -7,6 +7,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 import simulator.control.Controller;
 import simulator.model.Event;
+import simulator.model.Road;
 import simulator.model.RoadMap;
 import simulator.model.TrafficSimObserver;
 import simulator.model.Vehicle;
@@ -17,13 +18,20 @@ public class RoadTableModel extends AbstractTableModel implements TrafficSimObse
 
 	Controller controller ;
 	
-	private String[] _colNames = { "Id","Location","Itinerary","CO2 Class","Max Speed","Speed","Total CO2","Distance" };
-	private List<Vehicle>vehicles;	
+	private String[] _colNames = {"Id","Length","Weather","Max.Speed","Speed Limit","Total CO2","CO2 Limit"};
+	private List<Road>road;	
 	
 	
 	RoadTableModel(Controller controller){		
 		//this.controller.addObserver(this);
 	}
+	
+
+	@Override
+	public String getColumnName(int col) {
+		return _colNames[col];
+	}
+	
 
 	@Override
 	public int getColumnCount() {
@@ -32,12 +40,38 @@ public class RoadTableModel extends AbstractTableModel implements TrafficSimObse
 
 	@Override
 	public int getRowCount() {
-		return vehicles == null ? 0 : vehicles.size();
+		return road == null ? 0 : road.size();
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		return null;
+		Object s = null;
+		switch (columnIndex) {
+		case 0:
+			s = rowIndex;
+			break;
+		case 1:
+			s = road.get(rowIndex).getId();
+			break;
+		case 2:
+			s = road.get(rowIndex).getLength();
+			break;
+		case 3: 
+			s = road.get(rowIndex).getEnviromental_Conditions();
+		case 4 : 
+			s = road.get(rowIndex).getMax_Speed();
+		case 5: 
+			s = road.get(rowIndex).getCurrent_Max_Speed();
+			break;
+		case 6 : 
+			s = road.get(rowIndex).getGlobal_Pollution();
+			break ; 
+		case 7: 
+			s = road.get(rowIndex).getMasive_Pollution();
+			break;
+		}
+		return s;
+		
 	}
 
 	@Override
