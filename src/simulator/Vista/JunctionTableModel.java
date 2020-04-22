@@ -46,22 +46,17 @@ public class JunctionTableModel extends AbstractTableModel implements TrafficSim
 		Object s = null;
 		switch (columnIndex) {
 		case 0:
-			s = rowIndex;
-			break;
-		case 1:
 			s = junction.get(rowIndex).getId();
 			break;
-		case 2:
-		//	s = junction.get(rowIndex);
-			break;
-		case 3: 
-		//
+		case 1:
+			//s = junction.get(rowIndex).getIncomingRoadList().get();
 			break;
 		}
 		return s;
 		
 	}
-
+	
+	
 	@Override
 	public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
 		// TODO Auto-generated method stub
@@ -76,7 +71,10 @@ public class JunctionTableModel extends AbstractTableModel implements TrafficSim
 
 	@Override
 	public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
-		// TODO Auto-generated method stub
+		if(e.toString().equals("New junction")){ // ver si tambien tiene que tener el id
+			// tengo que añadirle una nueva fila a las junction
+			
+		}
 		
 	}
 

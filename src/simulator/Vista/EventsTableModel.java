@@ -39,12 +39,9 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 		Object s = null;
 		switch (columnIndex) {
 		case 0:
-			s = rowIndex;
-			break;
-		case 1:
 			s = _events.get(rowIndex).getTime();
 			break;
-		case 2:
+		case 1:
 			s = _events.get(rowIndex).toString();
 			break;
 		}

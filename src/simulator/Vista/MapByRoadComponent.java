@@ -80,10 +80,26 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 	private void drawRoads(Graphics g) {
 		for(int i = 0; i < _map.getRoads().size();i++){
 			
-			///DIBUJAR UNA LINEA //////////
-			g.drawLine(50, (i+1)*50, getWidth()-100,(i+1)*50 );
+			int x1 = 50;
+			int x2 = getWidth()-100;
 			
-			////DIBUJAR EN LOS EXTREMOS DOS CIRCULOS ///
+			
+			///DIBUJAR UNA LINEA //////////
+			g.drawLine(x1, (i+1)*x1, x2,(i+1)*x1 );
+			g.setColor(_JUNCTION_COLOR);		
+			
+			g.fillOval(x1- _JRADIUS,((i+1)*x1 )- _JRADIUS / 2, _JRADIUS, _JRADIUS);
+			
+			g.fillOval(x2 - _JRADIUS, ((i+1)*x1 )- _JRADIUS / 2, _JRADIUS, _JRADIUS);
+			
+			g.setColor(_JUNCTION_LABEL_COLOR);
+			
+			//// PARA PONER LOS NOMBRES DE LOS JUNCTIONS ///
+			g.drawString(_map.getRoads().get(i).getSrc().getId(), x1, (i+1)*x1);
+			g.drawString(_map.getRoads().get(i).getSrc().getId(),x2, (i+1)*x1);
+			
+			
+			
 			
 			
 		}
@@ -115,11 +131,11 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 
 				// Choose a color for the vehcile's label and background, depending on its
 				// contamination class
-				int vLabelColor = (int) (25.0 * (10.0 - (double) v.getDegree_of_Pollution()));
-				g.setColor(new Color(0, vLabelColor, 0));
+				//int vLabelColor = (int) (25.0 * (10.0 - (double) v.getDegree_of_Pollution()));
+				//g.setColor(new Color(0, vLabelColor, 0));
 
 				// draw an image of a car (with circle as background) and it identifier
-				g.fillOval(vX - 1, vY - 6, 14, 14);
+				//g.fillOval(vX - 1, vY - 6, 14, 14);
 				g.drawImage(_car, vX, vY - 6, 12, 12, this);
 				g.drawString(v.getId(), vX, vY - 6);
 			}
@@ -127,7 +143,7 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 	}
 
 	private void drawJunctions(Graphics g) {
-
+/*
 		for (Junction j : _map.getJunctions()) {
 
 			//COORDENADAS DEL JUNCTION
@@ -135,13 +151,16 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 			int y = j.getY();
 
 			// draw a circle with center at (x,y) with radius _JRADIUS
-			g.setColor(_JUNCTION_COLOR);
-			//g.fillOval(, y - _JRADIUS / 2, _JRADIUS, _JRADIUS);
+			g.setColor(_JUNCTION_COLOR);			
+			g.fillOval(x - _JRADIUS, y - _JRADIUS / 2, _JRADIUS, _JRADIUS);
+			
+			
 
 			// draw the junction's identifier at (x,y)
 			g.setColor(_JUNCTION_LABEL_COLOR);
 			g.drawString(j.getId(), x, y);
 		}
+	*/
 	}
 
 	// this method is used to update the preffered and actual size of the component,
@@ -162,38 +181,7 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 		}
 	}
 
-	// This method draws a line from (x1,y1) to (x2,y2) with an arrow.
-	// The arrow is of height h and width w.
-	// The last two arguments are the colors of the arrow and the line
-	private void drawLineWithArrow(//
-			Graphics g, //
-			int x1, int y1, //
-			int x2, int y2, //
-			int w, int h, //
-			Color lineColor, Color arrowColor) {
-
-		int dx = x2 - x1, dy = y2 - y1;
-		double D = Math.sqrt(dx * dx + dy * dy);
-		double xm = D - w, xn = xm, ym = h, yn = -h, x;
-		double sin = dy / D, cos = dx / D;
-
-		x = xm * cos - ym * sin + x1;
-		ym = xm * sin + ym * cos + y1;
-		xm = x;
-
-		x = xn * cos - yn * sin + x1;
-		yn = xn * sin + yn * cos + y1;
-		xn = x;
-
-		int[] xpoints = { x2, (int) xm, (int) xn };
-		int[] ypoints = { y2, (int) ym, (int) yn };
-
-		g.setColor(lineColor);
-		g.drawLine(x1, y1, x2, y2);
-		g.setColor(arrowColor);
-		g.fillPolygon(xpoints, ypoints, 3);
-	}
-
+	
 	// loads an image from a file
 	private Image loadImage(String img) {
 		Image i = null;
@@ -219,26 +207,25 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 
 	@Override
 	public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
+		update(map);
 		
 	}
 
 	@Override
 	public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
-		// TODO Auto-generated method stub
+		update(map);
 		
 	}
 
 	@Override
 	public void onReset(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
+		update(map);
 		
 	}
 
 	@Override
 	public void onRegister(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
-		
+		update(map);
 	}
 
 	@Override

@@ -44,6 +44,10 @@ public class SetWeatherEvent extends Event {
         }		
 	}
 	
+	public String toString(){
+				
+		return "New Weather event " + "[( " +this.ws.get(this.ws.size()-1).getFirst() + " ,"+this.ws.get(this.ws.size()-1).getSecond() + " )]";
+	}
 	
 	public List<Pair<String, Weather>> getWs() {
 		return ws;

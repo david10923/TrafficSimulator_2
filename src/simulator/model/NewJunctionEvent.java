@@ -40,7 +40,7 @@ public class NewJunctionEvent extends Event {
 	}
 	
 	public String toString(){
-		return "New Junction'"+this.id+ " ' ";
+		return "New Junction "+ "[( " +this.id + " )]";
 	}
 	
 	

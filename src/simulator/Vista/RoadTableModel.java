@@ -48,25 +48,22 @@ public class RoadTableModel extends AbstractTableModel implements TrafficSimObse
 		Object s = null;
 		switch (columnIndex) {
 		case 0:
-			s = rowIndex;
-			break;
-		case 1:
 			s = road.get(rowIndex).getId();
 			break;
-		case 2:
+		case 1:
 			s = road.get(rowIndex).getLength();
 			break;
-		case 3: 
+		case 2: 
 			s = road.get(rowIndex).getEnviromental_Conditions();
-		case 4 : 
+		case 3 : 
 			s = road.get(rowIndex).getMax_Speed();
-		case 5: 
+		case 4: 
 			s = road.get(rowIndex).getCurrent_Max_Speed();
 			break;
-		case 6 : 
+		case 5 : 
 			s = road.get(rowIndex).getGlobal_Pollution();
 			break ; 
-		case 7: 
+		case 6: 
 			s = road.get(rowIndex).getMasive_Pollution();
 			break;
 		}
@@ -88,7 +85,11 @@ public class RoadTableModel extends AbstractTableModel implements TrafficSimObse
 
 	@Override
 	public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
-	
+		
+		if(e.equals("New CityRoad") || e.equals("New InterCityRoad")){ 
+			//this.road.add(e);	
+			fireTableDataChanged();
+		}
 		
 	}
 

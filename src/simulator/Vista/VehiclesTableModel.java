@@ -50,32 +50,28 @@ public class VehiclesTableModel extends AbstractTableModel implements  TrafficSi
 		Object s = null;
 		switch (columnIndex) {
 		case 0:
-			s = rowIndex;
-			break;
-		case 1:
 			s = vehicles.get(rowIndex).getId();
 			break;
-		case 2:
+		case 1:
 			s = vehicles.get(rowIndex).getLocalization();
 			break;
-		case 3 : ///RECORRES EL ITINERARIO ///
+		case 2 : ///RECORRES EL ITINERARIO ///
 			for(int i = 0;i < vehicles.get(rowIndex).getItinerary().size();i++){
 				s = vehicles.get(rowIndex).getItinerary().toString();	
 			}				
 			break; 
-		case 4 : 
+		case 3 : 
 			 s = vehicles.get(rowIndex).getDegree_of_Pollution();
 			break ; 
-		case 5 : 
+		case 4 : 
 			 s = vehicles.get(rowIndex).getMax_Speed();
 			break ; 
-		case 6 : 
+		case 5 : 
 			 s = vehicles.get(rowIndex).getPollution();
 			break; 
-		case 7: 
+		case 6: 
 			 s = vehicles.get(rowIndex).getGlobal_distance_traveled();
 			break; 
-			
 		}
 		return s;
 		

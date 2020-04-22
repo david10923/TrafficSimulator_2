@@ -1,4 +1,4 @@
-package simulator.model;
+	package simulator.model;
 
 import java.awt.RenderingHints;
 import java.util.ArrayList;
