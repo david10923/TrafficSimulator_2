@@ -2,12 +2,14 @@ package simulator.Vista;
 
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
 import simulator.control.Controller;
 import simulator.model.Event;
+import simulator.model.NewVehicleEvent;
 import simulator.model.RoadMap;
 import simulator.model.TrafficSimObserver;
 import simulator.model.Vehicle;
@@ -81,37 +83,47 @@ public class VehiclesTableModel extends AbstractTableModel implements  TrafficSi
 
 	@Override
 	public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
+		
+			this.vehicles = map.getVehicles();
+			fireTableDataChanged();		
 		
 	}
 
 	@Override
 	public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
+		
+			this.vehicles = map.getVehicles();
+			fireTableDataChanged();		
+	
 		
 	}
 
 	@Override
 	public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
-		// TODO Auto-generated method stub
+	
+			this.vehicles = map.getVehicles();
+			fireTableDataChanged();							
+		
 		
 	}
 
 	@Override
 	public void onReset(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
+		
+			this.vehicles = map.getVehicles();
+			fireTableDataChanged();						
+		
 		
 	}
 
 	@Override
 	public void onRegister(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void onError(String err) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

@@ -2,6 +2,7 @@ package simulator.Vista;
 
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
@@ -59,28 +60,31 @@ public class JunctionTableModel extends AbstractTableModel implements TrafficSim
 	
 	@Override
 	public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
-		if(e.toString().equals("New junction")){ // ver si tambien tiene que tener el id
-			// tengo que añadirle una nueva fila a las junction
+	
+			this.junction = map.getJunctions();	
+			fireTableDataChanged();		
 			
-		}
+	}
+
+	@Override
+	public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {		
+			this.junction = map.getJunctions();	
+			fireTableDataChanged();		
+		
 		
 	}
 
 	@Override
-	public void onReset(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
+	public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {		
+			this.junction = map.getJunctions();		
+			fireTableDataChanged();			
+	}
+
+	@Override
+	public void onReset(RoadMap map, List<Event> events, int time) {		
+			this.junction = map.getJunctions();		
+			fireTableDataChanged();		
+		
 		
 	}
 

@@ -2,6 +2,7 @@ package simulator.Vista;
 
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
@@ -73,30 +74,31 @@ public class RoadTableModel extends AbstractTableModel implements TrafficSimObse
 
 	@Override
 	public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
 		
+			this.road = map.getRoads();
+			fireTableDataChanged();		
 	}
 
 	@Override
 	public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
+		
+			this.road = map.getRoads();
+			fireTableDataChanged();			
 		
 	}
 
 	@Override
 	public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
-		
-		if(e.equals("New CityRoad") || e.equals("New InterCityRoad")){ 
-			//this.road.add(e);	
-			fireTableDataChanged();
-		}
-		
+	
+			this.road = map.getRoads();
+			fireTableDataChanged();		
 	}
 
 	@Override
 	public void onReset(RoadMap map, List<Event> events, int time) {
-		// TODO Auto-generated method stub
-		
+	
+			this.road = map.getRoads();
+			fireTableDataChanged();		
 	}
 
 	@Override

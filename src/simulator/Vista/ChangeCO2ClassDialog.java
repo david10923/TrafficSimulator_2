@@ -136,7 +136,7 @@ public class ChangeCO2ClassDialog extends JDialog {
 		
 		this.ok = new JButton("Ok");
 		this.add(this.ok);
-		this.cancelar.addActionListener(new ActionListener (){
+		this.ok.addActionListener(new ActionListener (){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -170,15 +170,12 @@ public class ChangeCO2ClassDialog extends JDialog {
 		
 		return status;
 	}
-	
-	
+
 	
 	String getVehicle(){
 		return  vehicleModel.getSelectedItem().toString();
 	}
 
-	
-	
 	public JSpinner getCo2Class() {
 		return Co2Class;
 	}

@@ -37,6 +37,11 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 	private RoadMap _map;
 
 	private Image _car;
+	private final int x1 = 50;
+	private final int x2 = 200; //getWidth()-100;
+	
+	private Image _weather_conditions ; 
+	private Image _cont_class;
 	
 	
 	
@@ -80,24 +85,53 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 	private void drawRoads(Graphics g) {
 		for(int i = 0; i < _map.getRoads().size();i++){
 			
-			int x1 = 50;
-			int x2 = getWidth()-100;
-			
-			
 			///DIBUJAR UNA LINEA //////////
-			g.drawLine(x1, (i+1)*x1, x2,(i+1)*x1 );
-			g.setColor(_JUNCTION_COLOR);		
+			///ME PINTA MAL LA LINEA PQ X2 ESTA EN -100 /// NO SE PQ 
 			
+			g.drawLine(x1, (i+1)*x1, x2,(i+1)*x1 );
+			
+			g.setColor(_JUNCTION_COLOR);				
 			g.fillOval(x1- _JRADIUS,((i+1)*x1 )- _JRADIUS / 2, _JRADIUS, _JRADIUS);
 			
-			g.fillOval(x2 - _JRADIUS, ((i+1)*x1 )- _JRADIUS / 2, _JRADIUS, _JRADIUS);
-			
+			g.fillOval(x2 - _JRADIUS, ((i+1)*x1 )- _JRADIUS / 2, _JRADIUS, _JRADIUS);			
 			g.setColor(_JUNCTION_LABEL_COLOR);
 			
 			//// PARA PONER LOS NOMBRES DE LOS JUNCTIONS ///
 			g.drawString(_map.getRoads().get(i).getSrc().getId(), x1, (i+1)*x1);
 			g.drawString(_map.getRoads().get(i).getSrc().getId(),x2, (i+1)*x1);
 			
+			///PARA PONER EL NOMBRE A LAS CARRETERAS ///
+			g.drawString(_map.getRoads().get(i).getId(),x1-40,(i+1)*x1);
+			
+			////DIBUJAR UNA IMAGEN CON LAS CONDICIONES DE LA CARRETERA ////////
+			switch(_map.getRoads().get(i).getEnviromental_Conditions()){
+			case SUNNY:
+				this._weather_conditions = loadImage("sun.png");
+				break; 			
+			case WINDY:
+				this._weather_conditions = loadImage("wind.png");
+				break;
+			case STORM: 
+				this._weather_conditions = loadImage("storm.png");
+				break; 
+			case CLOUDY: 
+				this._weather_conditions = loadImage("cloud.png");
+				break; 
+			case RAINY: 
+				this._weather_conditions = loadImage("rain.png");
+				break; 
+			}
+			g.drawImage(this._weather_conditions,x2+10,(i+1)*x1,32,32,this);
+			
+			//////IMAGEN PARA LA CONTAMINACION DE LA CARRETERA/////
+			int A = _map.getRoads().get(i).getMasive_Pollution();
+			int B = _map.getRoads().get(i).getGlobal_Pollution();
+			
+			int c = (int) Math.floor(Math.min((double)A/(1.0 +(double)B), 1.0) /0.19); 
+			
+			this._cont_class = loadImage("cont_"+ c + ".png");	
+			
+			g.drawImage(this._cont_class,x2+50,(i+1)*x1,32,32,this);
 			
 			
 			
@@ -110,34 +144,20 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 		for (Vehicle v : _map.getVehicles()) {
 			if (v.getStatus() != VehicleStatus.ARRIVED) {
 
-				// The calculation below compute the coordinate (vX,vY) of the vehicle on the
-				// corresponding road. It is calculated relativly to the length of the road, and
-				// the location on the vehicle.
+				//caculamos la posicion relativa de los vehiculos
+				
 				Road r = v.getRoad();
+				
 				int x1 = r.getSrc().getX();
-				int y1 = r.getSrc().getY();
+				
 				int x2 = r.getDest().getX();
-				int y2 = r.getDest().getY();
-				double roadLength = Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
-				double alpha = Math.atan(((double) Math.abs(x1 - x2)) / ((double) Math.abs(y1 - y2)));
-				double relLoc = roadLength * ((double) v.getLocalization()) / ((double) r.getLength());
-				double x = Math.sin(alpha) * relLoc;
-				double y = Math.cos(alpha) * relLoc;
-				int xDir = x1 < x2 ? 1 : -1;
-				int yDir = y1 < y2 ? 1 : -1;
-
-				int vX = x1 + xDir * ((int) x);
-				int vY = y1 + yDir * ((int) y);
-
-				// Choose a color for the vehcile's label and background, depending on its
-				// contamination class
-				//int vLabelColor = (int) (25.0 * (10.0 - (double) v.getDegree_of_Pollution()));
-				//g.setColor(new Color(0, vLabelColor, 0));
-
-				// draw an image of a car (with circle as background) and it identifier
-				//g.fillOval(vX - 1, vY - 6, 14, 14);
-				g.drawImage(_car, vX, vY - 6, 12, 12, this);
-				g.drawString(v.getId(), vX, vY - 6);
+				
+				
+				int vX= x1 +(int) ((x2 - x1) *((double )v.getLocalization() / (double)  r.getLength()));
+				
+				
+				g.drawImage(_car, vX, x1 - 6, 12, 12, this);
+				g.drawString(v.getId(), vX, x1 - 6);
 			}
 		}
 	}
@@ -162,6 +182,8 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 		}
 	*/
 	}
+	
+	
 
 	// this method is used to update the preffered and actual size of the component,
 	// so when we draw outside the visible area the scrollbars show up

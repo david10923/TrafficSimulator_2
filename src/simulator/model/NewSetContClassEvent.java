@@ -9,8 +9,6 @@ public class NewSetContClassEvent extends Event{
 	private List<Pair<String,Integer>>cs;
 	
 
-	
-
 	public NewSetContClassEvent(int time,List<Pair<String,Integer>> cs) throws Exception {
 		super(time);
 		

@@ -214,7 +214,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		List<String>vehicle = new ArrayList<String>();
 		
 		for(int i = 0; i < controller.get_sim().getMap_of_roads().getVehicles().size(); i++){
-			vehicle.add(controller.get_sim().getMap_of_roads().getVehicles().toString());
+			vehicle.add(controller.get_sim().getMap_of_roads().getVehicles().get(i).toString());
 		}
 		
 		int status = dialog.open(vehicle);
@@ -222,11 +222,11 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		if(status==0 ){
 			System.out.println("Canceled");			
 		}
-		else{
+		else{ 
+			
 			/// TE DEVUELVE LA CLASE  DE CO2 , EL VEHICULO Y LOS TICKS ///////
-			dialog.getCo2Class(); 
-			dialog.getVehicle();
-			dialog.getTicks();
+			
+			controller.crearEventoContaminacion(dialog.getVehicle(),(int)dialog.getTicks().getValue(),(int) dialog.getCo2Class().getValue());
 		}
 	}
 	
@@ -237,7 +237,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		List<String>road = new ArrayList<String>();
 		
 		for(int i = 0; i < controller.get_sim().getMap_of_roads().getRoads().size(); i++){
-			road.add(controller.get_sim().getMap_of_roads().getRoads().toString());
+			road.add(controller.get_sim().getMap_of_roads().getRoads().get(i).toString());
 		}
 		
 		int status = dialog.open(road);
@@ -247,9 +247,8 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		}
 		else{
 			/// TE DEVUELVE LA CLASE  DE CO2 , EL VEHICULO Y LOS TICKS ///////
-			dialog.getTicks(); 
-			dialog.getWeather();
-			dialog.getRoad();
+			 
+			controller.crearEventoTiempo(dialog.getRoad(), dialog.getWeather(),(int)dialog.getTicks().getValue());
 		}
 	}
 
@@ -277,12 +276,12 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	
 	
 		private void enableToolBar(boolean b) {
-			//if(b){
+			
 				this.fichero.setEnabled(b);
 				this.cambioContaminacion.setEnabled(b);
 				this.contaminacion.setEnabled(b);
 				this.play.setEnabled(b);
-			//}
+			
 		}
 
 	private void stop() {

@@ -65,12 +65,8 @@ public class Controller {
 			 out = new OutputStream() {
 		
 				@Override
-				public void write(int b) throws IOException {
-				
-						
-					
-				}
-			};
+				public void write(int b) throws IOException {}	
+				};
 			
 			_sim.advance();
 			
