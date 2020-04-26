@@ -165,9 +165,9 @@ public class ChangeCO2ClassDialog extends JDialog {
 			this.vehicleModel.addElement(v);
 		}
 		
-		//setLocation(getParent().getLocation().x +10 , getParent().getLocation().y+10);
-		setVisible(true);
 		
+		setVisible(true);
+	
 		return status;
 	}
 

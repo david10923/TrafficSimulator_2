@@ -69,9 +69,12 @@ public class VehiclesTableModel extends AbstractTableModel implements  TrafficSi
 			 s = vehicles.get(rowIndex).getMax_Speed();
 			break ; 
 		case 5 : 
+			s = vehicles.get(rowIndex).getCurrent_Speed();
+			break;
+		case 6 : 
 			 s = vehicles.get(rowIndex).getPollution();
 			break; 
-		case 6: 
+		case 7: 
 			 s = vehicles.get(rowIndex).getGlobal_distance_traveled();
 			break; 
 		}

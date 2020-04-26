@@ -44,15 +44,29 @@ public class JunctionTableModel extends AbstractTableModel implements TrafficSim
 	
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		Object s = null;
+		Object s = null, x = null, y = null;
 		switch (columnIndex) {
 		case 0:
 			s = junction.get(rowIndex).getId();
 			break;
 		case 1:
-			//s = junction.get(rowIndex).getIncomingRoadList().get();
+			s = junction.get(rowIndex).getTrafficLight();
+			if((int)s == -1){
+				s = "NONE";
+				
+			}else{
+			s = junction.get(rowIndex).getIncomingRoadList().get((int)s);
+				
+				
+			}
 			break;
+		case 2:  // recorre las colas de las carreteras ///
+			
+			
+			
+			break; 
 		}
+		
 		return s;
 		
 	}

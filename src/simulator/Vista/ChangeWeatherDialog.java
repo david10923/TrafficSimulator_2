@@ -149,7 +149,7 @@ public class ChangeWeatherDialog extends JDialog  {
 		for (String r : roads){
 			this.roadModel.addElement(r);
 		}
-		
+		System.out.println("Entra en el open ");
 		//setLocation(getParent().getLocation().x +10 , getParent().getLocation().y+10);
 		setVisible(true);
 		

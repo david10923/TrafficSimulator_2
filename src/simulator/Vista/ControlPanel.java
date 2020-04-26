@@ -33,6 +33,7 @@ import simulator.model.Road;
 import simulator.model.RoadMap;
 import simulator.model.TrafficSimObserver;
 import simulator.model.Vehicle;
+import simulator.model.Weather;
 
 public class ControlPanel extends JPanel implements TrafficSimObserver {
 	
@@ -55,6 +56,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	
 	
 	 ControlPanel(Controller controller){
+		 controller.addObserver(this);
 		this.controller = controller;		
 		this.setLayout(new BorderLayout());
 		this.setVisible(true);
@@ -73,13 +75,15 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fc = new JFileChooser ();
+				File dir = new File("./resources/examples");
+				fc.setCurrentDirectory(dir.getAbsoluteFile());
 				
 				int respuesta  = fc.showOpenDialog(null); 
 				
 				if(respuesta == JFileChooser.APPROVE_OPTION){
-					File archivoElegido = fc.getSelectedFile();
-					File dir = new File("src/resources/examples"); /// HAY QUE PONER LA RUTA DEL SRC
-					fc.setCurrentDirectory(dir.getAbsoluteFile());
+					File archivoElegido = fc.getSelectedFile();					
+					//File dir = new File("src/resources/examples"); /// HAY QUE PONER LA RUTA DEL SRC
+					//fc.setCurrentDirectory(dir.getAbsoluteFile());
 					
 					controller.reset();
 					
@@ -144,6 +148,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				enableToolBar(false);
+				_stopped= false;				
 				run_sim((int)numeroDeTicks.getValue());				
 				
 			}
@@ -211,6 +216,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	public void Selected_Vehicle(){
 		ChangeCO2ClassDialog dialog = new ChangeCO2ClassDialog(this);
 		
+		
 		List<String>vehicle = new ArrayList<String>();
 		
 		for(int i = 0; i < controller.get_sim().getMap_of_roads().getVehicles().size(); i++){
@@ -219,10 +225,11 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		
 		int status = dialog.open(vehicle);
 		
+		////cuando le doy a ok ya ha entrado aqui ///
 		if(status==0 ){
 			System.out.println("Canceled");			
 		}
-		else{ 
+		else if (status ==1){ 
 			
 			/// TE DEVUELVE LA CLASE  DE CO2 , EL VEHICULO Y LOS TICKS ///////
 			
@@ -231,10 +238,17 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	}
 	
 	
+	
+	
+	
+	
 	public void Selected_Road(){
 		ChangeWeatherDialog dialog = new ChangeWeatherDialog(this);
 		
 		List<String>road = new ArrayList<String>();
+		List<String>weather = new ArrayList<String>();
+		
+	//	weather=Weather.values().;
 		
 		for(int i = 0; i < controller.get_sim().getMap_of_roads().getRoads().size(); i++){
 			road.add(controller.get_sim().getMap_of_roads().getRoads().get(i).toString());
@@ -245,7 +259,8 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		if(status==0 ){
 			System.out.println("Canceled");			
 		}
-		else{
+		else if (status ==1){
+			
 			/// TE DEVUELVE LA CLASE  DE CO2 , EL VEHICULO Y LOS TICKS ///////
 			 
 			controller.crearEventoTiempo(dialog.getRoad(), dialog.getWeather(),(int)dialog.getTicks().getValue());
