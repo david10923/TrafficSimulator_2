@@ -45,21 +45,22 @@ public class ChangeCO2ClassDialog extends JDialog {
 	private String INFO= "Schedule an event to change the CO2 class of a vehicle after  a given number of simulation ticks from now.";
 	
 	
-	private int status;
+	private int _status;
 	private JComboBox<String> vehicle ;
 	private DefaultComboBoxModel<String> vehicleModel ;
 	
 	
 	 ChangeCO2ClassDialog(JPanel controlPanel){
-		 super();
+		super();
 		iniciarVentana();
 		anadircomponentes();
-		
+	
 	}
 	
 	
 
 	private void iniciarVentana(){
+		_status = 0;
 		this.setBounds(400,300,650,150);
 		this.setVisible(true);	
 		this.setLayout(new FlowLayout());
@@ -117,16 +118,18 @@ public class ChangeCO2ClassDialog extends JDialog {
 		this.add(caja);
 		
 		
+	
+		
 		
 		//////////////////////////////////////////////////////////////////////////////
 		////AÑADIR LOS BOTONES///
 		this.cancelar = new JButton("Cancelar");
-		this.add(this.cancelar,BorderLayout.SOUTH);
+		this.add(this.cancelar);
 		this.cancelar.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				status = 0;
+				_status = 0;
 				ChangeCO2ClassDialog.this.setVisible(false);
 				
 			}
@@ -141,10 +144,9 @@ public class ChangeCO2ClassDialog extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(vehicleModel.getSelectedItem() != null){
-					status = 1; 
+					_status = 1; 
 					ChangeCO2ClassDialog.this.setVisible(false);
 				}
-					
 				
 			}
 			
@@ -152,7 +154,8 @@ public class ChangeCO2ClassDialog extends JDialog {
 		});
 		
 		
-		//pack();
+		
+	
 		setResizable(false);
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);//salta exception aqui
 	}
@@ -168,7 +171,7 @@ public class ChangeCO2ClassDialog extends JDialog {
 		
 		setVisible(true);
 	
-		return status;
+		return _status;
 	}
 
 	

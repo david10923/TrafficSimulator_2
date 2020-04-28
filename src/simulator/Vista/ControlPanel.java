@@ -223,13 +223,15 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 			vehicle.add(controller.get_sim().getMap_of_roads().getVehicles().get(i).toString());
 		}
 		
+	
 		int status = dialog.open(vehicle);
 		
-		////cuando le doy a ok ya ha entrado aqui ///
+		
 		if(status==0 ){
 			System.out.println("Canceled");			
 		}
 		else if (status ==1){ 
+			System.out.println("Ha entrado en ok");
 			
 			/// TE DEVUELVE LA CLASE  DE CO2 , EL VEHICULO Y LOS TICKS ///////
 			

@@ -64,6 +64,7 @@ class MyDialogWindow extends JDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("Le he dado a cancel ");
 				_status = 0;
 				MyDialogWindow.this.setVisible(false);
 			}
@@ -76,6 +77,7 @@ class MyDialogWindow extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (_dishesModel.getSelectedItem() != null) {
+					System.out.println("Le da a ok ");
 					_status = 1;
 					MyDialogWindow.this.setVisible(false);
 				}
@@ -90,7 +92,7 @@ class MyDialogWindow extends JDialog {
 	}
 
 	public int open(List<Dish> dishes) {
-
+		System.out.println("Entra en el open");
 		// update the comboxBox model -- if you always use the same no
 		// need to update it, you can initialize it in the constructor.
 		//

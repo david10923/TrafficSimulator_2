@@ -207,10 +207,7 @@ public class Main {
 		try {
 			ctrl = new Controller(sim, _eventsFactory);				
 			
-			if(_inFile != null) {
-				ctrl.loadEvents(in);
-				
-			}			
+						
 			
 			//ctrl.run(_timeLimit,null);
 			
@@ -219,6 +216,11 @@ public class Main {
 					new MainWindow(ctrl);
 				}
 			});
+			
+			if(_inFile != null) {
+				ctrl.loadEvents(in);
+				
+			}
 			
 			
 		} catch (InvalidArgumentException e) {

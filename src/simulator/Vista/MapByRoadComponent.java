@@ -24,7 +24,6 @@ import simulator.model.VehicleStatus;
 
 public class MapByRoadComponent extends JComponent implements TrafficSimObserver {
 	
-
 	private static final int _JRADIUS = 10;
 	
 	
@@ -37,9 +36,9 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 	private RoadMap _map;
 
 	private Image _car;
-	private final int x1 = 50;
-	private final int x2 = 200; //getWidth()-100;
-	
+	private  int x1 = 50;
+	private  int x2 =this.getSize().width-100;
+
 	private Image _weather_conditions ; 
 	private Image _cont_class;
 	
@@ -49,6 +48,7 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 	public MapByRoadComponent (Controller controller){
 		controller.addObserver(this);
 		initGUI();
+		
 	}
 
 	private void initGUI() {

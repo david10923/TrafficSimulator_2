@@ -53,10 +53,12 @@ public class RoadTableModel extends AbstractTableModel implements TrafficSimObse
 		case 1:
 			s = road.get(rowIndex).getLength();
 			break;
-		case 2: 
-			s = road.get(rowIndex).getEnviromental_Conditions();
+		case 2: 			
+			s = road.get(rowIndex).getEnviromental_Conditions().name();
+			break;
 		case 3 : 
 			s = road.get(rowIndex).getMax_Speed();
+			break;
 		case 4: 
 			s = road.get(rowIndex).getCurrent_Max_Speed();
 			break;
