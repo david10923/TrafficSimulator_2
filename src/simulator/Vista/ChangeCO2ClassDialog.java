@@ -14,6 +14,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -50,8 +51,9 @@ public class ChangeCO2ClassDialog extends JDialog {
 	private DefaultComboBoxModel<String> vehicleModel ;
 	
 	
-	 ChangeCO2ClassDialog(JPanel controlPanel){
-		super();
+	 ChangeCO2ClassDialog(Frame frame){
+		super(frame,true);
+		
 		iniciarVentana();
 		anadircomponentes();
 	
@@ -153,9 +155,7 @@ public class ChangeCO2ClassDialog extends JDialog {
 			
 		});
 		
-		
-		
-	
+		//pack();	
 		setResizable(false);
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);//salta exception aqui
 	}

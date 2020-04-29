@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.awt.Window;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -22,7 +23,6 @@ public class MainWindow extends JFrame  {
 	
 	private Controller _ctrl ;
 
-	//private boolean _stopped ;
 	
 	public MainWindow(Controller ctrl ) {
 		super ( "Traffic Simulator" );
@@ -66,15 +66,10 @@ public class MainWindow extends JFrame  {
 		
 		///////AÑADES LA TABLA DE LOS EVENTOS /////////
 		JPanel eventsView =
-		createViewPanel( new JTable( new EventsTableModel( _ctrl )), "Events" );
-		//////// SCROLL PARA LOS EVENTOS , NO SE SI HAY QUE PONERLO 
-		
-		/*
-		eventsView.add(new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED));
-		*/
-		
+		createViewPanel( new JTable( new EventsTableModel( _ctrl )), "Events" );		
 		eventsView .setPreferredSize( new Dimension(500, 200));
+		//eventsView.setMaximumSize( new Dimension(500, 200));
+		//eventsView.setMinimumSize(new Dimension(500,200));
 		tablesPanel .add( eventsView );
 		
 		
@@ -82,12 +77,16 @@ public class MainWindow extends JFrame  {
 		JPanel vehicleView =
 			createViewPanel( new JTable( new VehiclesTableModel( _ctrl )), "Vehicles" );
 			vehicleView .setPreferredSize( new Dimension(500, 200));
+			//vehicleView.setMinimumSize(new Dimension(500, 200));
+			//vehicleView.setMaximumSize(new Dimension(500, 200));			
 			tablesPanel .add( vehicleView );
 		
 		///////////AÑADES LA TABLA DE LOS VEHICULOS ////////
 		JPanel roadView =
 			createViewPanel( new JTable( new RoadTableModel( _ctrl )), "Roads" );
 			roadView .setPreferredSize( new Dimension(500, 200));
+			//roadView .setMinimumSize( new Dimension(500, 200));
+			//roadView .setMaximumSize( new Dimension(500, 200));			
 			tablesPanel .add( roadView );
 
 			
@@ -95,64 +94,33 @@ public class MainWindow extends JFrame  {
 		JPanel junctionView =
 			createViewPanel( new JTable( new JunctionTableModel(_ctrl )), "Junctions" );
 			junctionView .setPreferredSize( new Dimension(500, 200));
+			//junctionView.setMinimumSize( new Dimension(500, 200));
+			//junctionView.setMaximumSize( new Dimension(500, 200));			
 			tablesPanel .add( junctionView );
+			
+			
 			
 		///////AÑADE LA VISTA DE ARRIBA A LA DERECHA //////	
 		JPanel mapView = createViewPanel( new MapComponent( _ctrl ), "Map" );
 			mapView .setPreferredSize( new Dimension(500, 400));
+			//mapView .setMaximumSize( new Dimension(500, 400));
+			//mapView.setMinimumSize(new Dimension(500, 400));			
 			mapsPanel .add( mapView );
 			
 		
 		////////AÑADIR LA VISTA DE ABAJO A LA DERECHA ///			
 		JPanel mapByRoad = createViewPanel(new MapByRoadComponent(_ctrl),"Map by Road");
 		mapByRoad.setPreferredSize(new Dimension(300,200));
+		//mapByRoad.setMaximumSize(new Dimension(300,200));
+		//mapByRoad.setMinimumSize(new Dimension(300,200));		
 		mapsPanel.add(mapByRoad);
 	
-			
+		
 			
 		this .setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this .pack();
 		this .setVisible( true );
 		}
-	
-	
-	
-	/*
-	private void run_sim( int n ) {
-		if ( n > 0 && ! _stopped ) {
-			try {
-			_ctrl .run(1);
-			} catch (Exception e ) {
-			// TODO show error message
-			_stopped = true ;
-			return ;
-			}
-		SwingUtilities.invokeLater( new Runnable() {
-		@Override
-		public void run() {
-			run_sim( n - 1);
-		}
-		});
-		} else {
-			enableToolBar( true );
-			_stopped = true ;
-		}
-		}
-	
-	
-		private void enableToolBar(boolean b) {
-			if(b){
-				
-			}else{
-				
-			}
-		}
-
-
-		private void stop() {
-			_stopped = true ;
-		}
-	*/
 	
 	
 		private JPanel createViewPanel(JComponent c , String title ) {

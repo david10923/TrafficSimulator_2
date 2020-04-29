@@ -37,14 +37,13 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 
 	private Image _car;
 	private  int x1 = 50;
-	private  int x2 =this.getSize().width-100;
+	
+	
 
 	private Image _weather_conditions ; 
 	private Image _cont_class;
 	
 	
-	
-
 	public MapByRoadComponent (Controller controller){
 		controller.addObserver(this);
 		initGUI();
@@ -80,25 +79,35 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 		drawRoads(g);
 		drawVehicles(g);
 		drawJunctions(g);
+		
+		
 	}
 
 	private void drawRoads(Graphics g) {
 		for(int i = 0; i < _map.getRoads().size();i++){
 			
 			///DIBUJAR UNA LINEA //////////
-			///ME PINTA MAL LA LINEA PQ X2 ESTA EN -100 /// NO SE PQ 
 			
-			g.drawLine(x1, (i+1)*x1, x2,(i+1)*x1 );
+			g.drawLine(x1, (i+1)*x1,getWidth()-100,(i+1)*x1 );
 			
 			g.setColor(_JUNCTION_COLOR);				
 			g.fillOval(x1- _JRADIUS,((i+1)*x1 )- _JRADIUS / 2, _JRADIUS, _JRADIUS);
 			
-			g.fillOval(x2 - _JRADIUS, ((i+1)*x1 )- _JRADIUS / 2, _JRADIUS, _JRADIUS);			
-			g.setColor(_JUNCTION_LABEL_COLOR);
+			///// CAMBIAR EL RELLENO DEPENDIENDO DEL COLOR DEL SEMAFOR ///
+			g.fillOval( getWidth()-100 - _JRADIUS, ((i+1)*x1 )- _JRADIUS / 2, _JRADIUS, _JRADIUS);
 			
-			//// PARA PONER LOS NOMBRES DE LOS JUNCTIONS ///
-			g.drawString(_map.getRoads().get(i).getSrc().getId(), x1, (i+1)*x1);
-			g.drawString(_map.getRoads().get(i).getSrc().getId(),x2, (i+1)*x1);
+			if(_map.getRoads().get(i).getDest().getTrafficLight() == -1){ // si el semaforo esta en rojo 
+				g.setColor(_RED_LIGHT_COLOR);
+			}else{
+				g.setColor(_GREEN_LIGHT_COLOR);
+			}
+			
+						
+			
+			
+			//// PARA PONER LOS NOMBRES DE LOS JUNCTIONS ///			
+			g.drawString(_map.getRoads().get(i).getSrc().getId(), x1, (i+1)*x1);			
+			g.drawString(_map.getRoads().get(i).getDest().getId(), getWidth()-100, (i+1)*x1);
 			
 			///PARA PONER EL NOMBRE A LAS CARRETERAS ///
 			g.drawString(_map.getRoads().get(i).getId(),x1-40,(i+1)*x1);
@@ -121,7 +130,7 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 				this._weather_conditions = loadImage("rain.png");
 				break; 
 			}
-			g.drawImage(this._weather_conditions,x2+10,(i+1)*x1,32,32,this);
+			g.drawImage(this._weather_conditions, getWidth()-100+10,(i+1)*x1,32,32,this);
 			
 			//////IMAGEN PARA LA CONTAMINACION DE LA CARRETERA/////
 			int A = _map.getRoads().get(i).getMasive_Pollution();
@@ -131,7 +140,7 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 			
 			this._cont_class = loadImage("cont_"+ c + ".png");	
 			
-			g.drawImage(this._cont_class,x2+50,(i+1)*x1,32,32,this);
+			g.drawImage(this._cont_class, getWidth()-100+50,(i+1)*x1,32,32,this);
 			
 			
 			
@@ -204,7 +213,7 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 	}
 
 	
-	// loads an image from a file
+	
 	private Image loadImage(String img) {
 		Image i = null;
 		try {

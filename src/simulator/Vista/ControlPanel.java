@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -214,7 +215,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	///////METODOS PARA LOS JDIALOG ///////////////////
 	
 	public void Selected_Vehicle(){
-		ChangeCO2ClassDialog dialog = new ChangeCO2ClassDialog(this);
+		ChangeCO2ClassDialog dialog = new ChangeCO2ClassDialog((Frame) SwingUtilities.getWindowAncestor(this));
 		
 		
 		List<String>vehicle = new ArrayList<String>();
@@ -286,14 +287,13 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 			});
 		}
 		else {
-			enableToolBar( true );
+			enableToolBar(true);
 			_stopped = true ;
 		}
 	}
 	
 	
-		private void enableToolBar(boolean b) {
-			
+		private void enableToolBar(boolean b) {			
 				this.fichero.setEnabled(b);
 				this.cambioContaminacion.setEnabled(b);
 				this.contaminacion.setEnabled(b);
