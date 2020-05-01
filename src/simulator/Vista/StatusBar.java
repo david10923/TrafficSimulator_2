@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import simulator.control.Controller;
@@ -38,10 +39,10 @@ public class StatusBar extends JPanel implements TrafficSimObserver {
 		this.ticks.setSize(new Dimension(10,5));
 		this.ticks.setVisible(true);
 		caja1.add(this.ticks);
-		caja1.add(Box.createHorizontalStrut(9));
+		caja1.add(Box.createHorizontalStrut(20));
 		
 		///EVENTO QUE SE HA AÑADIDO ///
-		this.etiquetaEventos = new JLabel();
+		this.etiquetaEventos = new JLabel("Welcome!");
 		this.etiquetaEventos.setSize(new Dimension(10,5));
 		this.etiquetaEventos.setVisible(true);
 		caja1.add(this.etiquetaEventos);
@@ -54,9 +55,7 @@ public class StatusBar extends JPanel implements TrafficSimObserver {
 	@Override
 	public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
 		this.ticks.setText("Ticks: "+  time);
-		if(time==0){
-			this.etiquetaEventos.setText("Welcome!");
-		}
+		etiquetaEventos.setText(" ");
 		
 	}
 
@@ -64,8 +63,8 @@ public class StatusBar extends JPanel implements TrafficSimObserver {
 
 	@Override
 	public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
-		this.ticks.setText("Ticks: "+  time);
-		
+		this.ticks.setText("Ticks: "+  time);	
+		etiquetaEventos.setText(" ");
 	}
 
 
@@ -73,10 +72,8 @@ public class StatusBar extends JPanel implements TrafficSimObserver {
 	@Override
 	public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
 		this.ticks.setText("Ticks: "+  time);
-		this.etiquetaEventos.setText("Event added "+ e.toString());
+		this.etiquetaEventos.setText("Event added :"+ e.toString());
 	}
-
-
 
 
 	@Override
@@ -94,7 +91,7 @@ public class StatusBar extends JPanel implements TrafficSimObserver {
 
 	@Override
 	public void onError(String err) {
-		// TODO Auto-generated method stub
+		JOptionPane.showMessageDialog(this, err);
 		
 	}
 

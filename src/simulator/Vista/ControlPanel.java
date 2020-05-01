@@ -215,7 +215,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	///////METODOS PARA LOS JDIALOG ///////////////////
 	
 	public void Selected_Vehicle(){
-		ChangeCO2ClassDialog dialog = new ChangeCO2ClassDialog((Frame) SwingUtilities.getWindowAncestor(this));
+		ChangeCO2ClassDialog dialog = new ChangeCO2ClassDialog((Frame)SwingUtilities.getWindowAncestor(this));
 		
 		
 		List<String>vehicle = new ArrayList<String>();
@@ -227,12 +227,12 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	
 		int status = dialog.open(vehicle);
 		
-		
+		/*
 		if(status==0 ){
 			System.out.println("Canceled");			
 		}
-		else if (status ==1){ 
-			System.out.println("Ha entrado en ok");
+		else */if (status ==1){ 
+			//System.out.println("Ha entrado en ok");
 			
 			/// TE DEVUELVE LA CLASE  DE CO2 , EL VEHICULO Y LOS TICKS ///////
 			
@@ -246,23 +246,27 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	
 	
 	public void Selected_Road(){
-		ChangeWeatherDialog dialog = new ChangeWeatherDialog(this);
+		ChangeWeatherDialog dialog = new ChangeWeatherDialog((Frame)SwingUtilities.getWindowAncestor(this));
 		
 		List<String>road = new ArrayList<String>();
-		List<String>weather = new ArrayList<String>();
+		List<Weather>weather = new ArrayList<Weather>();
 		
-	//	weather=Weather.values().;
+		Weather arr [] = Weather.values();
+		
+		for(Weather w : arr){
+			weather.add(w);
+		}
 		
 		for(int i = 0; i < controller.get_sim().getMap_of_roads().getRoads().size(); i++){
 			road.add(controller.get_sim().getMap_of_roads().getRoads().get(i).toString());
 		}
 		
-		int status = dialog.open(road);
+		int status = dialog.open(road,weather);
 		
-		if(status==0 ){
+		/*if(status==0 ){
 			System.out.println("Canceled");			
 		}
-		else if (status ==1){
+		else*/ if (status ==1){
 			
 			/// TE DEVUELVE LA CLASE  DE CO2 , EL VEHICULO Y LOS TICKS ///////
 			 

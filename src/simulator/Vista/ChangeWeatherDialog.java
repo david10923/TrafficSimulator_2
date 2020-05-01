@@ -2,6 +2,7 @@ package simulator.Vista;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -11,6 +12,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -46,8 +48,8 @@ public class ChangeWeatherDialog extends JDialog  {
 	private JComboBox<Weather> weather;
 	private DefaultComboBoxModel<Weather> weatherModel;
 	
-	public ChangeWeatherDialog(JPanel controlPanel){
-		super();
+	public ChangeWeatherDialog(Frame frame){
+		super(frame, true);
 		iniciarVentana();
 		anadircomponentes();
 		
@@ -56,7 +58,6 @@ public class ChangeWeatherDialog extends JDialog  {
 	
 	private  void iniciarVentana(){
 		this.setBounds(400,300,650,150);
-		this.setVisible(true);	
 		this.setLayout(new FlowLayout());
 		this.setTitle("Change Road Weather");
 	
@@ -142,17 +143,21 @@ public class ChangeWeatherDialog extends JDialog  {
 	
 	/////// POR SI CAMBIAN LOS ELEMENTOS DEL JCOMBOBOX , DEL WEATHER NO SE HARIA YA QUE SIEMPRE ESTAN LOS MISMOS //
 	
-	public int open(List<String> roads){
+	public int open(List<String> roads,List<Weather>weather){
 		
 		this.roadModel.removeAllElements();
 		
 		for (String r : roads){
 			this.roadModel.addElement(r);
 		}
-		System.out.println("Entra en el open ");
-		//setLocation(getParent().getLocation().x +10 , getParent().getLocation().y+10);
-		setVisible(true);
 		
+		this.weatherModel.removeAllElements();
+	
+		for(Weather w : weather){
+			this.weatherModel.addElement(w);
+		}
+		
+		setVisible(true);		
 		return status;
 	}
 		

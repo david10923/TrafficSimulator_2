@@ -29,9 +29,11 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 	
 	private static final Color _BG_COLOR = Color.WHITE;
 	private static final Color _JUNCTION_COLOR = Color.BLUE;
-	private static final Color _JUNCTION_LABEL_COLOR = new Color(200, 100, 0);
+	//private static final Color _JUNCTION_LABEL_COLOR = new Color(200, 100, 0);
 	private static final Color _GREEN_LIGHT_COLOR = Color.GREEN;
 	private static final Color _RED_LIGHT_COLOR = Color.RED;
+	
+	private static final Color _BLACK_COLOR = Color.BLACK;
 
 	private RoadMap _map;
 
@@ -51,7 +53,7 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 	}
 
 	private void initGUI() {
-		_car = loadImage("car_front.png");
+		_car = loadImage("car.png");
 	}
 
 	public void paintComponent(Graphics graphics) {
@@ -77,8 +79,7 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 
 	private void drawMap(Graphics g) {
 		drawRoads(g);
-		drawVehicles(g);
-		drawJunctions(g);
+		drawVehicles(g);		
 		
 		
 	}
@@ -87,22 +88,30 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 		for(int i = 0; i < _map.getRoads().size();i++){
 			
 			///DIBUJAR UNA LINEA //////////
+			g.setColor(_BLACK_COLOR);
+			g.drawLine(x1, (i+1)*x1,getWidth()-100,(i+1)*x1 );			
+		
 			
-			g.drawLine(x1, (i+1)*x1,getWidth()-100,(i+1)*x1 );
 			
-			g.setColor(_JUNCTION_COLOR);				
+			//////CRUCE ORIGEN /////
+			g.setColor( _JUNCTION_COLOR );
 			g.fillOval(x1- _JRADIUS,((i+1)*x1 )- _JRADIUS / 2, _JRADIUS, _JRADIUS);
 			
-			///// CAMBIAR EL RELLENO DEPENDIENDO DEL COLOR DEL SEMAFOR ///
+			
+			
+			/////////CRUCE DESTINO///
+			
+		
+			if(_map.getRoads().get(i).getDestination().getTrafficLight() == i){ 
+				g.setColor(_GREEN_LIGHT_COLOR);
+			}else{			
+				g.setColor(_RED_LIGHT_COLOR);
+			}
+						
 			g.fillOval( getWidth()-100 - _JRADIUS, ((i+1)*x1 )- _JRADIUS / 2, _JRADIUS, _JRADIUS);
 			
-			if(_map.getRoads().get(i).getDest().getTrafficLight() == -1){ // si el semaforo esta en rojo 
-				g.setColor(_RED_LIGHT_COLOR);
-			}else{
-				g.setColor(_GREEN_LIGHT_COLOR);
-			}
 			
-						
+			g.setColor(_BLACK_COLOR);		
 			
 			
 			//// PARA PONER LOS NOMBRES DE LOS JUNCTIONS ///			
@@ -130,7 +139,7 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 				this._weather_conditions = loadImage("rain.png");
 				break; 
 			}
-			g.drawImage(this._weather_conditions, getWidth()-100+10,(i+1)*x1,32,32,this);
+			g.drawImage(this._weather_conditions, getWidth()-100+10,(i+1)*x1-20,32,32,this);
 			
 			//////IMAGEN PARA LA CONTAMINACION DE LA CARRETERA/////
 			int A = _map.getRoads().get(i).getMasive_Pollution();
@@ -140,7 +149,7 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 			
 			this._cont_class = loadImage("cont_"+ c + ".png");	
 			
-			g.drawImage(this._cont_class, getWidth()-100+50,(i+1)*x1,32,32,this);
+			g.drawImage(this._cont_class, getWidth()-100+50,(i+1)*x1-20,32,32,this);
 			
 			
 			
@@ -165,34 +174,13 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 				int vX= x1 +(int) ((x2 - x1) *((double )v.getLocalization() / (double)  r.getLength()));
 				
 				
-				g.drawImage(_car, vX, x1 - 6, 12, 12, this);
+				g.drawImage(_car, vX, x1 - 6, 16, 16, this);
 				g.drawString(v.getId(), vX, x1 - 6);
 			}
 		}
 	}
 
-	private void drawJunctions(Graphics g) {
-/*
-		for (Junction j : _map.getJunctions()) {
 
-			//COORDENADAS DEL JUNCTION
-			int x = j.getX();
-			int y = j.getY();
-
-			// draw a circle with center at (x,y) with radius _JRADIUS
-			g.setColor(_JUNCTION_COLOR);			
-			g.fillOval(x - _JRADIUS, y - _JRADIUS / 2, _JRADIUS, _JRADIUS);
-			
-			
-
-			// draw the junction's identifier at (x,y)
-			g.setColor(_JUNCTION_LABEL_COLOR);
-			g.drawString(j.getId(), x, y);
-		}
-	*/
-	}
-	
-	
 
 	// this method is used to update the preffered and actual size of the component,
 	// so when we draw outside the visible area the scrollbars show up

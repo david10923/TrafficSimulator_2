@@ -16,6 +16,7 @@ import simulator.factories.Factory;
 import simulator.misc.Pair;
 import simulator.model.Event;
 import simulator.model.NewSetContClassEvent;
+import simulator.model.SetWeatherEvent;
 import simulator.model.TrafficSimObserver;
 import simulator.model.TrafficSimulator;
 import simulator.model.Weather;
@@ -134,6 +135,7 @@ public class Controller {
 		 cs.add(new Pair<String,Integer>(id,CO2));
 		 
 		try {
+			time = this._sim.getTime_of_simulation() + time; 
 			Event evento = new NewSetContClassEvent(time,cs);
 			this._sim.addEvent(evento);
 		} catch (Exception e) {
@@ -143,10 +145,14 @@ public class Controller {
 		
 	}
 	
-	public void crearEventoTiempo(String id ,Weather w , int ticks){
+	public void crearEventoTiempo(String id ,Weather w ,int ticks){
+		List<Pair<String,Weather>>ws = new ArrayList<Pair<String,Weather>>();
+		ws.add(new Pair<String,Weather>(id,w));
+		
 		try {
-			this._sim.getMap_of_roads().getRoad(id).setWeather(w);
-			//this._sim.addEvent();
+			ticks = this._sim.getTime_of_simulation() + ticks;
+			Event evento  = new SetWeatherEvent(ticks,ws);
+			this._sim.addEvent(evento);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.getMessage();
