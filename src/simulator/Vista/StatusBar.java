@@ -31,23 +31,30 @@ public class StatusBar extends JPanel implements TrafficSimObserver {
 	}
 	
 	private void  inicializa(){
-		Box caja1 = Box.createHorizontalBox();	
 		
+		//Box caja1 = Box.createHorizontalBox();	
+		
+				
 		//ETIQUETA PARA EL TIMEPO DE EJECUCION ///
 		//this.ticks = new JLabel ("Ticks : "+ controller.get_sim().getTime_of_simulation());
 		this.ticks = new JLabel();
 		this.ticks.setSize(new Dimension(10,5));
 		this.ticks.setVisible(true);
-		caja1.add(this.ticks);
-		caja1.add(Box.createHorizontalStrut(20));
+		this.add(this.ticks,BorderLayout.WEST);
+		
+		//caja1.add(this.ticks);
+		//caja1.add(Box.createHorizontalStrut(20));
 		
 		///EVENTO QUE SE HA AÑADIDO ///
 		this.etiquetaEventos = new JLabel("Welcome!");
 		this.etiquetaEventos.setSize(new Dimension(10,5));
 		this.etiquetaEventos.setVisible(true);
-		caja1.add(this.etiquetaEventos);
+		this.add(this.etiquetaEventos,BorderLayout.CENTER);
 		
-		this.add(caja1);
+		
+		//caja1.add(this.etiquetaEventos);
+		
+		//this.add(caja1);
 		
 		
 	}

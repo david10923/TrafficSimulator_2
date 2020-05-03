@@ -1,4 +1,4 @@
-package simulator.Vista;
+	package simulator.Vista;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -22,9 +22,11 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.JToolBar;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 
@@ -48,6 +50,8 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	private JSpinner numeroDeTicks; 
 	private JButton close;
 	
+	private JToolBar toolBar;
+	
 	private ChangeCO2ClassDialog cambioCo2;// para la ventana emergente de contaminacion
 	private ChangeWeatherDialog cambioTiempo; // para la ventana emergente de tiempo 
 	
@@ -64,149 +68,178 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		inicializaComponentes();
 	}
 	
+	 
+	 private void  LoadEventsbutton(){
+	//////BOTON QUE CUANDO PULSES SALDRA UN JFILECHOOSER////
+			this.fichero = new JButton (new ImageIcon("resources/icons/open.png"));// habria que pasarle por parametro el icono 
+			this.fichero.setVisible(true);
+			
+			this.fichero.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JFileChooser fc = new JFileChooser ();
+					File dir = new File("./resources/examples");
+					fc.setCurrentDirectory(dir.getAbsoluteFile());
+					
+					int respuesta  = fc.showOpenDialog(null); 
+					
+					if(respuesta == JFileChooser.APPROVE_OPTION){
+						File archivoElegido = fc.getSelectedFile();					
+						//File dir = new File("src/resources/examples"); /// HAY QUE PONER LA RUTA DEL SRC
+						//fc.setCurrentDirectory(dir.getAbsoluteFile());
+						
+						controller.reset();
+						
+						InputStream in;
+						try {
+						// FALTA VER SI EL ARCHIVO EXISTE//////
+							in = new FileInputStream(archivoElegido);
+							controller.loadEvents(in); 
+						} catch (FileNotFoundException e1) {
+							
+							e1.getMessage();
+						}
+					
+					}
+				}
+				
+			});
+			
+
+	 }
+	 private void Co2Button(){
+		 this.contaminacion = new JButton(new ImageIcon("resources/icons/co2class.png"));// habria que pasarle por parametro el icono 
+			this.contaminacion.setVisible(true);
+			this.contaminacion.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {				
+					Selected_Vehicle();
+				}
+				
+			});
+			
+	 }
+	 
+	 private void WeatherButton(){
+		 this.cambioContaminacion = new JButton(new ImageIcon("resources/icons/weather.png"));
+			this.cambioContaminacion.setVisible(true);
+			this.cambioContaminacion.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {	//////////////////////// NO SE COMO VER SI SE HA PULSADO OK 
+					Selected_Road();
+				}
+				
+			});
+	 }
+	 
+	 private void PlayButton(){
+
+			this.play= new JButton(new ImageIcon("resources/icons/run.png"));
+			this.play.setVisible(true);
+			this.play.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					enableToolBar(false);
+					_stopped= false;				
+					run_sim((int)numeroDeTicks.getValue());				
+					
+				}
+				
+			});
+	 }
+	 
+	 private void StopButton(){
+		 this.stop = new JButton(new ImageIcon("resources/icons/stop.png"));
+			this.stop.setVisible(true);
+			this.stop.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					stop();
+					
+				}
+				
+			});
+	 }
+	 
+	 private void SpinnerTicks(){
+
+			this.numeroDeTicks = new JSpinner(new SpinnerNumberModel(0,0,147483647,1));
+			this.numeroDeTicks.setPreferredSize(new Dimension(80,30));
+			this.numeroDeTicks.setMaximumSize(new Dimension(60,40));
+			this.setVisible(true);
+			
+	 }
+	 
+	 private void closeButton(){
+		 this.close = new JButton(new ImageIcon("resources/icons/exit.png"));		
+			this.close.setVisible(true);
+			this.close.addActionListener(new ActionListener(){
+
+				public void actionPerformed(ActionEvent arg0) {
+				      int i = JOptionPane.showConfirmDialog(null, "Do you want to close the app?", "EXIT", JOptionPane.YES_NO_OPTION,
+		                        JOptionPane.ERROR_MESSAGE);
+
+		                if (i == JOptionPane.YES_OPTION)
+		                    System.exit(0);
+
+					//new ExitOperation();
+				}
+			});
+	 }
 	
 	private void inicializaComponentes(){
-		Box caja1 = Box.createHorizontalBox();	
 		
-		//////BOTON QUE CUANDO PULSES SALDRA UN JFILECHOOSER////
-		this.fichero = new JButton (new ImageIcon("resources/icons/open.png"));// habria que pasarle por parametro el icono 
-		this.fichero.setVisible(true);
+		this.toolBar = new JToolBar();
 		
-		this.fichero.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser fc = new JFileChooser ();
-				File dir = new File("./resources/examples");
-				fc.setCurrentDirectory(dir.getAbsoluteFile());
+		LoadEventsbutton();		
+		this.toolBar.add(this.fichero);
+		this.toolBar.addSeparator();
+		
+		Co2Button();	
+		this.toolBar.add(this.contaminacion);
+		this.toolBar.addSeparator();
+		
+		
+		WeatherButton();		
+		this.toolBar.add(this.cambioContaminacion);
+		this.toolBar.addSeparator();
+		
 				
-				int respuesta  = fc.showOpenDialog(null); 
-				
-				if(respuesta == JFileChooser.APPROVE_OPTION){
-					File archivoElegido = fc.getSelectedFile();					
-					//File dir = new File("src/resources/examples"); /// HAY QUE PONER LA RUTA DEL SRC
-					//fc.setCurrentDirectory(dir.getAbsoluteFile());
-					
-					controller.reset();
-					
-					InputStream in;
-					try {
-					// FALTA VER SI EL ARCHIVO EXISTE//////
-						in = new FileInputStream(archivoElegido);
-						controller.loadEvents(in); 
-					} catch (FileNotFoundException e1) {
-						
-						e1.getMessage();
-					}
-				
-				}
-			}
-			
-		});
+		PlayButton();		
+		this.toolBar.add(this.play);
+		this.toolBar.addSeparator();
 		
-		caja1.add(fichero);		
-		caja1.add(Box.createHorizontalStrut(5));
-		
-		//////////////////////////////////////////////////////////////////////////////////////////////
-		
-		////// BOTON DE CONTAMINACION////
-		this.contaminacion = new JButton(new ImageIcon("resources/icons/co2class.png"));// habria que pasarle por parametro el icono 
-		this.contaminacion.setVisible(true);
-		this.contaminacion.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {				
-				Selected_Vehicle();
-			}
-			
-		});
-		
-		caja1.add(contaminacion);		
-		caja1.add(Box.createHorizontalStrut(5));
-		
-		//////////////////////////////////////////////////////////////////////////////
-		
-		//BOTON DE CAMBIO DE WEATHER ///		
-		this.cambioContaminacion = new JButton(new ImageIcon("resources/icons/weather.png"));
-		this.cambioContaminacion.setVisible(true);
-		this.cambioContaminacion.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {	//////////////////////// NO SE COMO VER SI SE HA PULSADO OK 
-				Selected_Road();
-			}
-			
-		});
-		caja1.add(this.cambioContaminacion);		
-		caja1.add(Box.createHorizontalStrut(5));
+	
+		StopButton();
+		this.toolBar.add(this.stop);
+		this.toolBar.addSeparator();
 		
 		
-		////////////////////////////////////////////////////////////////////////////////////
-		
-		/////BOTON DEL PLAY //////
-		this.play= new JButton(new ImageIcon("resources/icons/run.png"));
-		this.play.setVisible(true);
-		this.play.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				enableToolBar(false);
-				_stopped= false;				
-				run_sim((int)numeroDeTicks.getValue());				
-				
-			}
-			
-		});
-		caja1.add(this.play); 		
-		caja1.add(Box.createHorizontalStrut(5));
-		
-		///////////////////////////////////////////////////////////////////////////
-		
-		///BOTON DE STOP 
-		this.stop = new JButton(new ImageIcon("resources/icons/stop.png"));
-		this.stop.setVisible(true);
-		this.stop.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				stop();
-				
-			}
-			
-		});
-		caja1.add(this.stop);
-		caja1.add(Box.createHorizontalStrut(5));
-		
-		////////////////////////////////////////////////////////////////////////////////////
 		
 		/////////ETIQUETA DE LOS TICKS DEL SIMULADOR///
 		this.ticks = new JLabel("Ticks"); 
 		this.ticks.setSize(new Dimension(10,5));
 		this.ticks.setVisible(true);
-		caja1.add(this.ticks); 
-		caja1.add(Box.createHorizontalStrut(5));
 		
-		////////////////////////////////////////////////////////////////////////////////////
+		this.toolBar.add(this.ticks);
+		this.toolBar.addSeparator();
 		
-		/////////JTEXT FIELD DE LOS TICKS ////
-		this.numeroDeTicks = new JSpinner(new SpinnerNumberModel(0,0,147483647,1));
-		this.numeroDeTicks.setMaximumSize(new Dimension(60,40));
-		this.setVisible(true);
-		caja1.add(this.numeroDeTicks);
 		
-		////////////////////////////////////////////////////////////////////////////////////
+		SpinnerTicks();
+		this.toolBar.add(this.numeroDeTicks);
 		
-		///BOTON DE CERRAR LA APP///////////////////////////
+	
 		
-		this.close = new JButton(new ImageIcon("resources/icons/exit.png"));		
-		this.close.setVisible(true);
-		this.close.addActionListener(new ActionListener(){
-
-			public void actionPerformed(ActionEvent arg0) {
-				new ExitOperation();
-			}
-			
-		});
-		this.add(this.close,BorderLayout.EAST);	
-		this.add(caja1);
+		closeButton();
+		toolBar.add(Box.createGlue());
+		toolBar.add(this.close);
+		 
+		
+		this.add(toolBar);
+		//this.add(this.toolBar,BorderLayout.NORTH);
 		
 		
 		

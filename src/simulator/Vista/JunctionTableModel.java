@@ -60,10 +60,8 @@ public class JunctionTableModel extends AbstractTableModel implements TrafficSim
 				
 			}
 			break;
-		case 2:  // recorre las colas de las carreteras ///
-			
-			
-			
+		case 2: 
+						
 			break; 
 		}
 		

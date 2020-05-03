@@ -53,22 +53,43 @@ public class ChangeCO2ClassDialog extends JDialog {
 	
 	 ChangeCO2ClassDialog(Frame frame){
 		super(frame,true);		
-		iniciarVentana();
+		//iniciarVentana();
 		anadircomponentes();
 	
 	}
 	
-	
+	/*
 
 	private void iniciarVentana(){
 		_status = 0;
+		
+		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout(new FlowLayout());
+		setContentPane(mainPanel);
+		
+		
 		this.setBounds(400,300,650,150);		
-		this.setLayout(new FlowLayout());
+		//this.setLayout(new FlowLayout());
 		this.setTitle("Change C02 Class");
+		
+		
 	
 	}
 	
+	*/
 	private void anadircomponentes(){
+		
+		_status = 0;
+		
+		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout(new FlowLayout());
+		setContentPane(mainPanel);
+		
+		
+		this.setBounds(400,300,650,150);		
+		//this.setLayout(new FlowLayout());
+		this.setTitle("Change C02 Class");
+		
 		
 		Box caja = Box.createHorizontalBox();
 		
@@ -115,7 +136,7 @@ public class ChangeCO2ClassDialog extends JDialog {
 		caja.add(this.ticks);	
 		caja.add(Box.createHorizontalStrut(200));
 		
-		this.add(caja);
+		mainPanel.add(caja);
 		
 		
 	

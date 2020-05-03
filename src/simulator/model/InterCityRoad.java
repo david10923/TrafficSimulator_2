@@ -72,6 +72,7 @@ public class InterCityRoad extends Road{
 	public int calculateVehicleSpeed(Vehicle v) {
 		
 		if(this.environmental_conditions == Weather.STORM) {
+			//return (int)(this.Current_Max_Speed_limit*0.8);
 			return (int)Math.ceil(this.Current_Max_Speed_limit*0.8);
 		}else {
 			return this.Current_Max_Speed_limit;

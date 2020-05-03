@@ -51,7 +51,10 @@ public class CityRoad extends Road{
 	@Override
 	protected int calculateVehicleSpeed(Vehicle v) {
 		
+		//return (int)((CityRoad.auxiliar-v.getDegree_of_Pollution())/CityRoad.auxiliar)*this.Current_Max_Speed_limit;
 		return (int) Math.ceil(((CityRoad.auxiliar-v.getDegree_of_Pollution())/CityRoad.auxiliar)*this.Current_Max_Speed_limit);
+		
+	
 		
 	}
 
