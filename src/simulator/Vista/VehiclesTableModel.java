@@ -13,12 +13,13 @@ import simulator.model.NewVehicleEvent;
 import simulator.model.RoadMap;
 import simulator.model.TrafficSimObserver;
 import simulator.model.Vehicle;
+import simulator.model.VehicleStatus;
 
 public class VehiclesTableModel extends AbstractTableModel implements  TrafficSimObserver{
 	
 	
 	
-	private String[] _colNames = {"Id","Location","Itinerary","CO2 Class","Max Speed","Speed","Total CO2","Distance"};
+	private String[] _colNames = {"Id","State","Itinerary","CO2 Class","Max Speed","Speed","Total CO2","Distance"};
 	private List<Vehicle>vehicles;
 	
 	
@@ -55,12 +56,21 @@ public class VehiclesTableModel extends AbstractTableModel implements  TrafficSi
 			s = vehicles.get(rowIndex).getId();
 			break;
 		case 1:
-			s = vehicles.get(rowIndex).getLocalization();
+			s= vehicles.get(rowIndex).getStatus();
+			
+			 if(s.equals(VehicleStatus.TRAVELING)){				
+				return s + ":" +vehicles.get(rowIndex).getLocalization();
+			}
+			else if (s.equals(VehicleStatus.WAITING)){
+				return s + ":"+vehicles.get(rowIndex).getRoad().getDest();
+				
+			}else if(s.equals(VehicleStatus.ARRIVED) || s.equals(VehicleStatus.PENDING)){
+				return s;
+			}	
+			 
 			break;
-		case 2 : ///RECORRES EL ITINERARIO ///
-			for(int i = 0;i < vehicles.get(rowIndex).getItinerary().size();i++){
-				s = vehicles.get(rowIndex).getItinerary().toString();	
-			}				
+		case 2 :			
+				s = vehicles.get(rowIndex).getItinerary().toString();					
 			break; 
 		case 3 : 
 			 s = vehicles.get(rowIndex).getDegree_of_Pollution();

@@ -47,6 +47,7 @@ public class ChangeCO2ClassDialog extends JDialog {
 	
 	
 	private int _status;
+	
 	private JComboBox<String> vehicle ;
 	private DefaultComboBoxModel<String> vehicleModel ;
 	

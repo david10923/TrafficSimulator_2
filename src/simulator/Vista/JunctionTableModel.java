@@ -56,13 +56,17 @@ public class JunctionTableModel extends AbstractTableModel implements TrafficSim
 				
 			}else{
 			s = junction.get(rowIndex).getIncomingRoadList().get((int)s);
-				
-				
+							
 			}
 			break;
 		case 2: 
-						
-			break; 
+			if(junction.get(rowIndex).getTrafficLight() == -1){
+				return ""; 
+				
+			}else{
+				return junction.get(rowIndex).getMapOfQueueRoad().toString();
+			}
+			
 		}
 		
 		return s;

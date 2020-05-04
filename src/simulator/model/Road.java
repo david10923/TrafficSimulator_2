@@ -247,6 +247,8 @@ public abstract class Road extends SimulatedObject {
 		return Current_Max_Speed_limit;
 	}
 
-	
+	public List<Vehicle>getListVehicle(){
+		return this.Vehicles;
+	}
 
 }

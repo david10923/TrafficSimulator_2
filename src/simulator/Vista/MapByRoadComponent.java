@@ -21,6 +21,7 @@ import simulator.model.RoadMap;
 import simulator.model.TrafficSimObserver;
 import simulator.model.Vehicle;
 import simulator.model.VehicleStatus;
+import simulator.model.Weather;
 
 public class MapByRoadComponent extends JComponent implements TrafficSimObserver {
 	
@@ -39,11 +40,16 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 
 	private Image _car;
 	private  int x1 = 50;
-	
-	
-
 	private Image _weather_conditions ; 
 	private Image _cont_class;
+	
+	
+	
+	
+	private RoadMap map;
+    private Image car;
+    private Image weather;
+    private Image cont;
 	
 	
 	public MapByRoadComponent (Controller controller){
@@ -79,11 +85,10 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 
 	private void drawMap(Graphics g) {
 		drawRoads(g);
-		drawVehicles(g);		
-		
+		drawVehicles(g);	
 		
 	}
-
+	
 	private void drawRoads(Graphics g) {
 		for(int i = 0; i < _map.getRoads().size();i++){
 			
@@ -99,9 +104,7 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 			
 			
 			
-			/////////CRUCE DESTINO///
-			
-		
+			/////////CRUCE DESTINO///		
 			if(_map.getRoads().get(i).getDestination().getTrafficLight() == i){ 
 				g.setColor(_GREEN_LIGHT_COLOR);
 			}else{			
@@ -142,10 +145,10 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 			g.drawImage(this._weather_conditions, getWidth()-100+10,(i+1)*x1-20,32,32,this);
 			
 			//////IMAGEN PARA LA CONTAMINACION DE LA CARRETERA/////
-			int A = _map.getRoads().get(i).getMasive_Pollution();
-			int B = _map.getRoads().get(i).getGlobal_Pollution();
-			
-			int c = (int) Math.floor(Math.min((double)A/(1.0 +(double)B), 1.0) /0.19); 
+			int B = _map.getRoads().get(i).getMasive_Pollution();			
+			int A = _map.getRoads().get(i).getGlobal_Pollution();		
+					
+			int c = (int) Math.floor(Math.min((double) A / (1.0 + (double) B), 1.0) / 0.19);
 			
 			this._cont_class = loadImage("cont_"+ c + ".png");	
 			
@@ -159,25 +162,49 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 	}
 
 	private void drawVehicles(Graphics g) {
+		/*
 		for (Vehicle v : _map.getVehicles()) {
 			if (v.getStatus() != VehicleStatus.ARRIVED) {
 
-				//caculamos la posicion relativa de los vehiculos
-				
 				Road r = v.getRoad();
 				
-				int x1 = r.getSrc().getX();
+				//int x1 = r.getSrc().getX();				
+				//int x2 = r.getDest().getX();
+				int x2 = this.getWidth()-100;
 				
-				int x2 = r.getDest().getX();
+				int y = (_map.getVehicles().indexOf(v)+1)*50;	
 				
 				
-				int vX= x1 +(int) ((x2 - x1) *((double )v.getLocalization() / (double)  r.getLength()));
+				int a = r.getListVehicle().get(_map.getVehicles().indexOf(v)).getLocalization();
+			
+				
+				int vX= x1 +(int) ((x2 - x1) *((double )a/ (double)r.getLength()));
 				
 				
-				g.drawImage(_car, vX, x1 - 6, 16, 16, this);
-				g.drawString(v.getId(), vX, x1 - 6);
+				g.drawImage(_car, vX, y-12, 16, 16, this);
+				g.drawString(v.getId(), vX, y -17);
 			}
 		}
+		
+	*/
+				
+		for (int cars = 0; cars < _map.getRoads().size(); cars++) {
+			for(int i = 0; i < _map.getRoads().get(cars).getListVehicle().size();i++){
+				int x2 = this.getWidth()-100;
+				int y = (cars+1)*50;
+				
+				int A = _map.getRoads().get(cars).getListVehicle().get(i).getLocalization();
+	            int B = _map.getRoads().get(cars).getLength();
+	            int x = -7 + x1 + (int) ((x2 - x1) * ((double) A / (double) B));
+
+	            g.drawImage(_car, x, y - 12, 16, 16, this);
+	            g.setColor(Color.white);
+	            g.drawString(_map.getRoads().get(cars).getListVehicle().get(i).getId(), x + 1, y - 17);
+				
+			}
+           
+        }
+		
 	}
 
 
