@@ -44,14 +44,6 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 	private Image _cont_class;
 	
 	
-	
-	
-	private RoadMap map;
-    private Image car;
-    private Image weather;
-    private Image cont;
-	
-	
 	public MapByRoadComponent (Controller controller){
 		controller.addObserver(this);
 		initGUI();

@@ -34,7 +34,6 @@ public class StatusBar extends JPanel implements TrafficSimObserver {
 		
 		//Box caja1 = Box.createHorizontalBox();	
 		
-				
 		//ETIQUETA PARA EL TIMEPO DE EJECUCION ///
 		//this.ticks = new JLabel ("Ticks : "+ controller.get_sim().getTime_of_simulation());
 		this.ticks = new JLabel();
@@ -79,7 +78,7 @@ public class StatusBar extends JPanel implements TrafficSimObserver {
 	@Override
 	public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
 		this.ticks.setText("Ticks: "+  time);
-		this.etiquetaEventos.setText("Event added :"+ e.toString());
+		this.etiquetaEventos.setText("  Event added :"+ e.toString());
 	}
 
 
@@ -98,7 +97,7 @@ public class StatusBar extends JPanel implements TrafficSimObserver {
 
 	@Override
 	public void onError(String err) {
-		JOptionPane.showMessageDialog(this, err);
+		JOptionPane.showMessageDialog(null,err );
 		
 	}
 

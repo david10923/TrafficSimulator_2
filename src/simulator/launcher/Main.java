@@ -235,9 +235,9 @@ public class Main {
 	
 	private static void start(String[] args) throws IOException {
 		initFactories();
-		parseArgs(args);
+		parseArgs(args);	
 		
-		if(mode.equals(guimode)) {
+		if(mode.equals(guimode)) {			
 			startGUImode();
 		}else {
 			startBatchMode();

@@ -62,51 +62,27 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 
 	@Override
 	public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
-		try{
+		
 			this._events = events; 			
-			fireTableDataChanged();			
-		}
-		catch(Exception exp ){
-			JOptionPane.showMessageDialog( 
-					null, "Something went wrong ...",
-					"ERROR", //
-					JOptionPane.ERROR_MESSAGE);
-			
-		}
-
+		
 		
 	}
 
 	@Override
 	public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) { // para notificar que los datos de la tabla han cambiado
-		try{
+		
 			this._events = events; 			
 			fireTableDataChanged();			
-		}
-		catch(Exception exp ){
-			JOptionPane.showMessageDialog( 
-					null, "Something went wrong ...",
-					"ERROR", //
-					JOptionPane.ERROR_MESSAGE);
-			
-		}
 		
 		
 	}
 
 	@Override
 	public void onReset(RoadMap map, List<Event> events, int time) {
-		try{
+		
 			this._events = events; 			
 			fireTableDataChanged();			
-		}
-		catch(Exception exp ){
-			JOptionPane.showMessageDialog( 
-					null, "Something went wrong ...",
-					"ERROR", //
-					JOptionPane.ERROR_MESSAGE);
-			
-		}
+		
 		
 	}
 

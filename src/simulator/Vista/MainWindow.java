@@ -65,37 +65,33 @@ public class MainWindow extends JFrame  {
 		
 		
 		///////AÑADES LA TABLA DE LOS EVENTOS /////////
-		JPanel eventsView =
-		createViewPanel( new JTable( new EventsTableModel( _ctrl )), "Events" );		
-		eventsView .setPreferredSize( new Dimension(500, 200));
-		//eventsView.setMaximumSize( new Dimension(500, 200));
-		//eventsView.setMinimumSize(new Dimension(500,200));
-		tablesPanel .add( eventsView );
+		JTable tabEventsView = new JTable (new EventsTableModel( _ctrl ));
+		tabEventsView.setShowGrid(false);		
+		JPanel eventsView =	createViewPanel(tabEventsView, "Events" );		
+			eventsView .setPreferredSize( new Dimension(500, 200));		
+			tablesPanel .add( eventsView );
 		
 		
-		////AÑADES LA TABLA DE VEHICULOS //////
-		JPanel vehicleView =
-			createViewPanel( new JTable( new VehiclesTableModel( _ctrl )), "Vehicles" );
-			vehicleView .setPreferredSize( new Dimension(500, 200));
-			//vehicleView.setMinimumSize(new Dimension(500, 200));
-			//vehicleView.setMaximumSize(new Dimension(500, 200));			
+		////AÑADES LA TABLA DE VEHICULOS //////		
+		JTable tabVehicle = new JTable( new VehiclesTableModel( _ctrl ));
+		tabVehicle.setShowGrid(false);
+		JPanel vehicleView =createViewPanel(tabVehicle, "Vehicles" );
+			vehicleView .setPreferredSize( new Dimension(500, 200));			
 			tablesPanel .add( vehicleView );
 		
 		///////////AÑADES LA TABLA DE LOS VEHICULOS ////////
-		JPanel roadView =
-			createViewPanel( new JTable( new RoadTableModel( _ctrl )), "Roads" );
-			roadView .setPreferredSize( new Dimension(500, 200));
-			//roadView .setMinimumSize( new Dimension(500, 200));
-			//roadView .setMaximumSize( new Dimension(500, 200));			
+		JTable tabRoadView = new JTable( new RoadTableModel( _ctrl ));		
+		tabRoadView.setShowGrid(false);
+		JPanel roadView =createViewPanel( tabRoadView, "Roads" );			
+			roadView .setPreferredSize( new Dimension(500, 200));					
 			tablesPanel .add( roadView );
 
 			
 		//////////////AÑADES LA TABLA DE JUNCTIONS///////
-		JPanel junctionView =
-			createViewPanel( new JTable( new JunctionTableModel(_ctrl )), "Junctions" );
-			junctionView .setPreferredSize( new Dimension(500, 200));
-			//junctionView.setMinimumSize( new Dimension(500, 200));
-			//junctionView.setMaximumSize( new Dimension(500, 200));			
+		JTable tabJunctionTable =  new JTable( new JunctionTableModel(_ctrl ));
+		tabJunctionTable.setShowGrid(false);
+		JPanel junctionView =createViewPanel(tabJunctionTable, "Junctions" );
+			junctionView .setPreferredSize( new Dimension(500, 200));					
 			tablesPanel .add( junctionView );
 			
 			

@@ -65,7 +65,7 @@ public class TestExamples {
 		File myoutFile = new File(path + "/" + info.getString("file") + ".myout.json");
 		Integer ticks = info.getInt("ticks");
 
-		_stdOut.println("-> Running: " + inFile);
+		_stdOut.println("-> Running: " + inFile);		
 		try {
 			simulator.launcher.Main
 					.main(new String[] { "-i", inFile.getPath(), "-o", myoutFile.getPath(), "-t", ticks.toString() });
@@ -93,7 +93,7 @@ public class TestExamples {
 		String path = args.length == 0 ? "resources/examples" : args[0];
 
 		// change 'true' to 'false' to generate the expected output instead of testing
-		start(path, true);
+		start(path, false);
 	}
 
 }
