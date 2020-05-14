@@ -80,7 +80,7 @@ public class TestExamples {
 				_stdOut.println("Failed (output is not equal)!");
 			}
 		} catch (Exception e) {
-			_stdOut.println("Failed (exception thrown).");
+			_stdOut.println("Failed (exception thrown)."+e.getMessage());
 		}
 
 	}
@@ -93,7 +93,7 @@ public class TestExamples {
 		String path = args.length == 0 ? "resources/examples" : args[0];
 
 		// change 'true' to 'false' to generate the expected output instead of testing
-		start(path, false);
+		start(path, true);
 	}
 
 }

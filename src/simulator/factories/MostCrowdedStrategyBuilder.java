@@ -8,7 +8,7 @@ import simulator.model.RoundRobinStrategy;
 
 public class MostCrowdedStrategyBuilder extends Builder<LightSwitchingStrategy>{
 
-	private static String type = "move_first_dqs";
+	private static String type = "most_crowded_lss";
 	private final int ONE = 1;
 
 	public MostCrowdedStrategyBuilder() {
