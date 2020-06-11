@@ -3,6 +3,7 @@ package simulator.launcher;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -195,32 +196,31 @@ public class Main {
 	
 	private static void startGUImode ()throws IOException {
 		
-		InputStream in = null;
-		
-		if(_inFile!= null) 
-			 in = new FileInputStream(new File(_inFile)); // hay que cargarlos solo si se proporciona
-		
-		
 		Controller ctrl;		
 		TrafficSimulator sim = new TrafficSimulator();
 				
 		try {
-			ctrl = new Controller(sim, _eventsFactory);				
+			ctrl = new Controller(sim, _eventsFactory);	
+		
 			
+				SwingUtilities.invokeLater(new Runnable() {
+					public void run () {					
+					
+						new MainWindow(ctrl);
+						if(_inFile!= null) {
+							 InputStream in;
+							try {
+								in = new FileInputStream(new File(_inFile));
+								ctrl.loadEvents(in);
+							} catch (FileNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} 
+							
+						}
 						
-			
-			//ctrl.run(_timeLimit,null);
-			
-			SwingUtilities.invokeLater(new Runnable() {
-				public void run () {
-					new MainWindow(ctrl);
-				}
-			});
-			
-			if(_inFile != null) {
-				ctrl.loadEvents(in);
-				
-			}
+					}
+				});
 			
 			
 		} catch (InvalidArgumentException e) {
@@ -230,6 +230,7 @@ public class Main {
 		
 		
 	}
+	
 	
 	
 	

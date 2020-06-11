@@ -40,14 +40,17 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
 	}
 	
 	public void advance() {
-		
+		/*
 		if (this.time_of_simulation > 1) {
+			
             try {
-                Thread.sleep(50);
+                //Thread.sleep(50);
             } catch (InterruptedException e1) {
                 e1.printStackTrace();
             }
+            
         }
+	 */
 		
 		this.time_of_simulation++;
 		
