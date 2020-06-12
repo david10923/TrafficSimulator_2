@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -57,7 +58,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	
 	
 	private boolean _stopped = false ;
-	
+	private final File archivo;
 	
 	
 	 ControlPanel(Controller controller){
@@ -65,13 +66,25 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		this.controller = controller;		
 		this.setLayout(new BorderLayout());
 		this.setVisible(true);
+		this.archivo = new File("resources/icons");
 		inicializaComponentes();
+		
 	}
 	
 	 
 	 private void  LoadEventsbutton(){
+		 
+		 this.fichero = new JButton ();
 	//////BOTON QUE CUANDO PULSES SALDRA UN JFILECHOOSER////
-			this.fichero = new JButton (new ImageIcon("resources/icons/open.png"));// habria que pasarle por parametro el icono 
+		 
+		 
+		 if(!archivo.exists()){
+			 this.fichero.setText("Load Events");
+		 }else{
+			 this.fichero.setIcon(new ImageIcon("resources/icons/open.png"));;// habria que pasarle por parametro el icono 
+		 }
+		 
+			
 			this.fichero.setVisible(true);
 			
 			this.fichero.addActionListener(new ActionListener(){
@@ -108,7 +121,15 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 
 	 }
 	 private void Co2Button(){
-		 this.contaminacion = new JButton(new ImageIcon("resources/icons/co2class.png"));// habria que pasarle por parametro el icono 
+		 this.contaminacion = new JButton();
+		 
+		 if(!archivo.exists()){
+			 this.contaminacion.setText("Contaminacion");
+		 }else{
+			 this.contaminacion.setIcon(new ImageIcon("resources/icons/co2class.png"));// habria que pasarle por parametro el icono 
+		 }
+		 
+		
 			this.contaminacion.setVisible(true);
 			this.contaminacion.addActionListener(new ActionListener(){
 
@@ -122,7 +143,16 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	 }
 	 
 	 private void WeatherButton(){
-		 this.cambioContaminacion = new JButton(new ImageIcon("resources/icons/weather.png"));
+		 this.cambioContaminacion = new JButton();
+		
+		 // por si no encuentra el icono 
+		 if(!archivo.exists()){
+			this.cambioContaminacion.setText("Weather");
+		 }else{
+			 this.cambioContaminacion.setIcon( new ImageIcon("resources/icons/weather.png"));
+		 }
+		 
+		 
 			this.cambioContaminacion.setVisible(true);
 			this.cambioContaminacion.addActionListener(new ActionListener(){
 
@@ -135,8 +165,16 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	 }
 	 
 	 private void PlayButton(){
-
-			this.play= new JButton(new ImageIcon("resources/icons/run.png"));
+		 this.play= new JButton();
+		 	
+		 	 // por si no encuentra el icono 
+		 	if(!archivo.exists()){
+		 		this.play.setText("Play");
+		 	}else{
+		 		this.play.setIcon(new ImageIcon("resources/icons/run.png"));
+		 	}
+		 	
+		 	
 			this.play.setVisible(true);
 			this.play.addActionListener(new ActionListener(){
 				@Override
@@ -151,7 +189,14 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	 }
 	 
 	 private void StopButton(){
-		 this.stop = new JButton(new ImageIcon("resources/icons/stop.png"));
+		 this.stop = new JButton();
+		 if(!archivo.exists()){
+			 this.stop.setText("Stop");
+		 }else{
+			 this.stop.setIcon( new ImageIcon("resources/icons/stop.png"));
+		 }
+		 
+		
 			this.stop.setVisible(true);
 			this.stop.addActionListener(new ActionListener(){
 
@@ -174,7 +219,14 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	 }
 	 
 	 private void closeButton(){
-		 this.close = new JButton(new ImageIcon("resources/icons/exit.png"));		
+		 this.close = new JButton();
+		 
+		 if(!archivo.exists()){
+			this.close.setText("Close");	
+		 }else{
+			 this.close.setIcon( new ImageIcon("resources/icons/exit.png"));		
+		 }
+		
 			this.close.setVisible(true);
 			this.close.addActionListener(new ActionListener(){
 

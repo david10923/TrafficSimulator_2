@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import simulator.model.DequeingStrategy;
 import simulator.model.MoveFirstStrategy;
 
-public class MoveFirstStrategyBuilder  extends Builder{
+public class MoveFirstStrategyBuilder  extends Builder<DequeingStrategy>{
 
 	private static String type = "move_first_dqs";
 

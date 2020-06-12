@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import simulator.model.Event;
 import simulator.model.NewVehicleEvent;
 
-public class NewVehicleEventBuilder extends Builder{
+public class NewVehicleEventBuilder extends Builder<Event>{
 
 	private static String type= "new_vehicle";
 	private int time; 

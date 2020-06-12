@@ -3,10 +3,11 @@ package simulator.factories;
 import org.json.JSONObject;
 
 import simulator.model.DequeingStrategy;
+import simulator.model.Event;
 import simulator.model.MoveAllStrategy;
 import simulator.model.MoveFirstStrategy;
 
-public class MoveAllStrategyBuilder extends Builder{	
+public class MoveAllStrategyBuilder extends Builder<DequeingStrategy>{	
 
 	private static String type ="most_all_dqs";
 

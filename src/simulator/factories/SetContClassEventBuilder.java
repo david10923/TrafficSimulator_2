@@ -11,7 +11,7 @@ import simulator.model.Event;
 import simulator.model.NewSetContClassEvent;
 import simulator.model.Weather;
 
-public class SetContClassEventBuilder extends Builder {
+public class SetContClassEventBuilder extends Builder<Event> {
 
 	private static String type = "set_cont_class";
 	private int time; 
