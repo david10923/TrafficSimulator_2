@@ -28,7 +28,7 @@ public class Junction extends SimulatedObject {
 	private final int ReedLight = -1;
 
 	Junction(String id, LightSwitchingStrategy isStrategy, DequeingStrategy dqStrategy, int xCoor, int yCoor)
-			throws InvalidArgumentException {
+			 {
 		super(id);
 
 		if (isStrategy == null || dqStrategy == null)

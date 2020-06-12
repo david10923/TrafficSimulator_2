@@ -29,12 +29,12 @@ public class NewJunctionEvent extends Event {
 	@Override
 	void execute(RoadMap map) {
 		 
-		try {
+		//try {
 			Junction j= new Junction(this.id,this.lightStrategy,this.dqStrategy,this.xCoor,this.yCoor);
 			map.addJunction(j);		
-		} catch (InvalidArgumentException e) {			
-			e.getMessage();
-		}
+		//} catch (InvalidArgumentException e) {			
+			//e.getMessage();
+		//}
 	
 		
 	}
