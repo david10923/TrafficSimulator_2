@@ -9,11 +9,11 @@ public class NewSetContClassEvent extends Event{
 	private List<Pair<String,Integer>>cs;
 	
 
-	public NewSetContClassEvent(int time,List<Pair<String,Integer>> cs) throws Exception {
+	public NewSetContClassEvent(int time,List<Pair<String,Integer>> cs) {
 		super(time);
 		
 		if(cs == null) {
-			throw new Exception("List is null");
+			throw new IllegalArgumentException("List is null");
 		}
 		else {
 			this._time = time; 
@@ -29,7 +29,7 @@ public class NewSetContClassEvent extends Event{
 		
 		
 		for(int i = 0;i< this.cs.size();i++) {			
-			//try{
+		
 				id = this.cs.get(i).getFirst(); 
 				
 				while(j < map.getVehicles().size()  && ok) {
@@ -46,9 +46,11 @@ public class NewSetContClassEvent extends Event{
 					}
 					j++;
 				}
+				if(ok ){//  no lo ha encontrado 
+					throw new IllegalArgumentException("The road does not exists");
+				}
 				
-			//}catch(Exception e )
-				//System.out.println("This road not exits");
+			
 			ok = true;
 		}
 		

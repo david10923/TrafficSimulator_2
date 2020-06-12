@@ -10,7 +10,7 @@ public class CityRoad extends Road{
 	private static final double auxiliar = 11.0;
 
 
-	protected CityRoad(String id, Junction srcJunc, Junction destJunc, int maxSpeed, int contLimit, int length, Weather weather) throws Exception {
+	protected CityRoad(String id, Junction srcJunc, Junction destJunc, int maxSpeed, int contLimit, int length, Weather weather) {
 		super(id, srcJunc, destJunc, maxSpeed, contLimit, length, weather);
 		
 		/*

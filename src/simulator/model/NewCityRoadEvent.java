@@ -26,13 +26,13 @@ public class NewCityRoadEvent  extends NewRoadEvent{
 			
 		Road r = null;
 		
-			try {
+			//try {
 				 r= new CityRoad(this.id, this.src,this.dest, this.maxSpeed, this.co2Limit, this.length, this.weather);
 				
-			} catch (Exception e) {
+			//} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.getMessage();
-			}
+				//e.getMessage();
+			//}
 		
 			
 		return r;

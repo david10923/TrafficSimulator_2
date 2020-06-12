@@ -33,7 +33,7 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 	
 	
 	
-	 Vehicle(String id,int maxSpeed ,int contClass,List<Junction> itinerary) throws Exception{
+	 Vehicle(String id,int maxSpeed ,int contClass,List<Junction> itinerary) {
 		super(id);
 		
 		if(maxSpeed < 0 ) {
@@ -140,7 +140,7 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 		}
 	}
 	
-	 void setContaminationClass(int c) throws Exception{
+	 void setContaminationClass(int c) {
 		if(c<0 || c >10) {
 			throw new InvalidArgumentException("Incorrect contClass value");	
 			
@@ -150,15 +150,15 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 		
 	}
 	
-	 void moveToNextRoad() throws Exception {
+	 void moveToNextRoad() {
 		Junction actualJunc , nextJunc;
 		
 		if(this.Status == VehicleStatus.ARRIVED){
-			throw new Exception("The vehice is travelling");
+			throw new IllegalArgumentException("The vehice is travelling");
 		}
 		if( this.Status == VehicleStatus.TRAVELING){
 			
-			throw new Exception("The vehice is travelling");
+			throw new IllegalArgumentException("The vehice is travelling");
 		}
 		
 		

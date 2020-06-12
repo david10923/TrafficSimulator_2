@@ -42,12 +42,12 @@ public class SetContClassEventBuilder extends Builder {
 
 			}			
 			
-			try {
+			//try {
 				e = new NewSetContClassEvent(this.time,this.cs);				
-			} catch (Exception e1) {
+			//} catch (Exception e1) {
 				// TODO Auto-generated catch block
-				e1.getMessage();
-			}
+			//	e1.getMessage();
+			//}
 			
 		}
 		

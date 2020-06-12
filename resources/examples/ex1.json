@@ -100,6 +100,23 @@
           "itinerary" : ["j2", "j3", "j4"]
       }
     },
+    {
+
+      "type" : "set_weather",
+
+      "data" : {
+
+          "time"     : 100,
+
+          "info"     : [ { "road" : "r1", "weather": "SUNNY" }, 
+
+                         { "road" : "r88", "weather": "STORM" }, 
+
+                     ]
+
+      }
+
+    },
 	{
   	  "type" : "set_weather",
       "data" : {

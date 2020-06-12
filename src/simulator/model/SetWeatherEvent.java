@@ -11,7 +11,7 @@ public class SetWeatherEvent extends Event {
 	private List<Pair<String,Weather>> ws;
 	
 	
-	public SetWeatherEvent(int time,List<Pair<String,Weather>> ws) throws InvalidArgumentException {
+	public SetWeatherEvent(int time,List<Pair<String,Weather>> ws)  {
 		super(time);
 		this.ws = new ArrayList<Pair<String,Weather>>();
 		
@@ -20,7 +20,7 @@ public class SetWeatherEvent extends Event {
 			this._time = time;
 		}
 		else {
-			throw new InvalidArgumentException("The list is null");
+			throw new IllegalArgumentException("The list is null");
 		}
 		
 	}
@@ -28,18 +28,18 @@ public class SetWeatherEvent extends Event {
 	@Override
 	void execute(RoadMap map)  {		 
 		for (Pair<String, Weather> p : ws) {			
-            try {
-                Road road = map.getRoad(p.getFirst());
-                try {
-                    road.setWeather(p.getSecond());
-
-                } catch (Exception e) {
-                    e.getMessage();
-                }
-
-            } catch (Exception e) {
-                System.out.println("This road not exits");
+            
+            Road road = map.getRoad(p.getFirst());
+            
+            if(road == null){
+            	throw new IllegalArgumentException("This road does not exits");
             }
+            else{
+            	   road.setWeather(p.getSecond());
+            }
+             
+         
+        
 
         }		
 	}

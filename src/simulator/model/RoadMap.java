@@ -53,13 +53,13 @@ public class RoadMap {
 		this.RoadList.add(r);	
 		
 		
-		try {
+		//try {
 			r.Source.addOutgoingRoad(r);
 			r.Destination.addIncomingRoad(r);			
 			
-		} catch (Exception e) {
-			e.getMessage();
-		}
+		//} catch (Exception e) {
+			//e.getMessage();
+		//}
 		
 		
 	}

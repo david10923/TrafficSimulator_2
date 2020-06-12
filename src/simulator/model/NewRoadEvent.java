@@ -27,12 +27,12 @@ public abstract class NewRoadEvent extends Event {
 			this.src =map.getJunction(this.srcJunc);
 			this.dest = map.getJunction(this.destJunc);
 			
-			try {
+			//try {
 				map.addRoad(createRoadObject());
-			} catch (InvalidArgumentException e) {
+			//} catch (InvalidArgumentException e) {
 				// TODO Auto-generated catch block
-				e.getMessage();
-			}
+				//e.getMessage();
+			//}
 			
 			
 			

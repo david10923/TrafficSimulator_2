@@ -46,12 +46,12 @@ public class SetWeatherEventBuilder  extends Builder<Event>{
 				this.ws.add(new Pair<String,Weather>(pair.getString("road"),Weather.getWeather(pair.getString("weather"))));
 			}
 			
-			 try {
+			// try {
 				e = new SetWeatherEvent(this.time ,this.ws);
-			} catch (InvalidArgumentException e1) {
+			//} catch (IllegalArgumentException e1) {
 				// TODO Auto-generated catch block
-				e1.getMessage();
-			}
+				//e1.getMessage();
+			//}
 			
 		}
 		

@@ -180,11 +180,11 @@ public class Junction extends SimulatedObject {
     
     
 
-	void addIncomingRoad(Road r) throws Exception {
+	void addIncomingRoad(Road r){
 		int indexOfTheRoad;
 
 		if (r.getDestination() != this) {
-			throw new Exception("The road that you specified is not an incoming road");
+			throw new IllegalArgumentException("The road that you specified is not an incoming road");
 		} 
 		
 		IncomingRoadList.add(r);
@@ -194,21 +194,17 @@ public class Junction extends SimulatedObject {
 		this.mapOfQueueRoad.put(r, cola);
 		
 		
-		
-		
-		
-
 	}
 
-	void addOutgoingRoad(Road r) throws Exception {
+	void addOutgoingRoad(Road r) {
 		
 		if(!this.OutgoingRoadList.isEmpty()){
 			if ((this.OutgoingRoadList.containsKey(r.getDestination()))){// si alguna carretera va al cruce o
 																						// r es un cruce entrante
-				throw new Exception("The road can not be a OutgoingRoad");
+				throw new IllegalArgumentException("The road can not be a OutgoingRoad");
 			}
 			if((r.getSource() != this)){
-				throw new Exception("The road can not be a OutgoingRoad");
+				throw new IllegalArgumentException("The road can not be a OutgoingRoad");
 			}
 		
 		}

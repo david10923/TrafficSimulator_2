@@ -26,7 +26,7 @@ public abstract class Road extends SimulatedObject {
 	
 
 	
-	 Road(String id ,Junction srcJunc ,Junction destJunc ,int maxSpeed,int contLimit ,int length,Weather weather)throws Exception {
+	 Road(String id ,Junction srcJunc ,Junction destJunc ,int maxSpeed,int contLimit ,int length,Weather weather) {
 		super(id);		
 		
 		if(maxSpeed <0 ) 
@@ -128,9 +128,9 @@ public abstract class Road extends SimulatedObject {
 	
 	
 	
-	public void setWeather(Weather w) throws Exception{
+	public void setWeather(Weather w) {
 		if(w==null)
-			throw new Exception("The weather is null");
+			throw new IllegalArgumentException("The weather is null");
 		else {
 			this.environmental_conditions = w ;
 		}

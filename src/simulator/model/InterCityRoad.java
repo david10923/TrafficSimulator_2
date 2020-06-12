@@ -16,7 +16,7 @@ public class InterCityRoad extends Road{
 	//private int contamination_limit;
 	
 	
-	protected InterCityRoad(String id ,Junction srcJunc ,Junction destJunc ,int maxSpeed,int contLimit ,int length,Weather weather) throws Exception {
+	protected InterCityRoad(String id ,Junction srcJunc ,Junction destJunc ,int maxSpeed,int contLimit ,int length,Weather weather) {
 		super(id,srcJunc,destJunc,maxSpeed,contLimit,length,weather);
 		
 		/*

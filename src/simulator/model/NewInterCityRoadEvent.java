@@ -23,12 +23,12 @@ public class NewInterCityRoadEvent extends NewRoadEvent {
 	public Road createRoadObject() {
 		Road r = null;
 		
-			try {
+			//try {
 				r = new InterCityRoad(this.id,this.src,this.dest,this.maxSpeed,this.co2Limit,this.length,this.weather);
-			} catch (Exception e) {
+			//} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.getMessage();
-			}
+				//e.getMessage();
+			//}
 		
 		 
 		return r;

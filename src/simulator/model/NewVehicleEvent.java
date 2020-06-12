@@ -35,13 +35,13 @@ public class NewVehicleEvent extends Event{
 			
 		}		
 		
-		try {
+		//try {
 			Vehicle v = new Vehicle(this.id,this.maxSpeed,this.contClass,junctionItinerary);
 			map.addVehicle(v);
 			v.moveToNextRoad(); 
-		} catch (Exception e) {			
-			e.getMessage();
-		}
+		//} catch (Exception e) {			
+			//e.getMessage();
+		//}
 		
 	}
 	
