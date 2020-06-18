@@ -131,7 +131,7 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 	}
 	
 	
-	 void setSpeed (int s) throws Exception {		
+	 void setSpeed (int s) {		
 		if(s <0 ) {
 			throw new InvalidArgumentException("Incorrect,the Speed is negative");
 		}

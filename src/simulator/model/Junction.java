@@ -61,7 +61,7 @@ public class Junction extends SimulatedObject {
 	}
 
 	@Override
-	void advance(int time) throws Exception {
+	void advance(int time)  {
 
 		if (this.TrafficLight != this.ReedLight) {
 			if(!this.QueueList.isEmpty()) {

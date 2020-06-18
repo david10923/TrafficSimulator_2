@@ -57,7 +57,13 @@ public class NewSetContClassEvent extends Event{
 	}
 	
 	public String toString(){
-		return "New SetContClass "+ "[( "+ this.cs.get(this.cs.size()-1).getFirst() + ", " + this.cs.get(this.cs.size()-1).getSecond() + " )]";
+		String s = "New SetContClass "+ "[";		
+		
+		for(int i=0;i< cs.size();i++){
+			s += "("+ this.cs.get(i).getFirst() + ", " + this.cs.get(i).getSecond() + " )";
+		}
+		
+		return s += "]";
 	}
 	
 

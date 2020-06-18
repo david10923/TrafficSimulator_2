@@ -50,58 +50,41 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
 				o.onAdvanceStart(this.map_of_roads,this.list_of_events,this.time_of_simulation);
 			}
 			
-			Iterator<Event> it  = this.list_of_events.iterator();
-			
-			while(it.hasNext()){
-				Event e = it.next();
-				if(e.getTime() == this.time_of_simulation){
-					try{
-						e.execute(this.map_of_roads);
-						
-						
-					}catch(IllegalArgumentException error ){
-						for(TrafficSimObserver o : this.listaObservadores){
-							o.onError(error.getMessage());					
+			try{
+				Iterator<Event> it  = this.list_of_events.iterator();
+				
+				while(it.hasNext()){
+					Event e = it.next();
+					if(e.getTime() == this.time_of_simulation){						
+							e.execute(this.map_of_roads);					
+							it.remove();
 						}
 						
-						error.getMessage();
-					}finally{
-						it.remove();
-					}
+					}				
+				
+			
+				
+				for(int i = 0; i< this.map_of_roads.getJunctions().size();i++) {					
+						this.map_of_roads.getJunctions().get(i).advance(this.time_of_simulation);					
+						
+				}
+				
+				
+			
+				
+				for(int i = 0; i< this.map_of_roads.getRoads().size();i++) {					
+						this.map_of_roads.getRoads().get(i).advance(this.time_of_simulation);
 					
 				}
-			}
-			
-		
-			
-			for(int i = 0; i< this.map_of_roads.getJunctions().size();i++) {
-				try {
-					this.map_of_roads.getJunctions().get(i).advance(this.time_of_simulation);
-				} catch (Exception e) {
-					
-					for(TrafficSimObserver o : this.listaObservadores){
-						o.onError(e.getMessage());					
-					}
-					
-					e.getMessage();
+				
+			}catch(Exception e ){
+				for(TrafficSimObserver o : this.listaObservadores){
+					o.onError(e.getMessage());					
 				}
+				e.getMessage();
+				
 			}
 			
-			
-		
-			
-			for(int i = 0; i< this.map_of_roads.getRoads().size();i++) {
-				try {
-					this.map_of_roads.getRoads().get(i).advance(this.time_of_simulation);
-				} catch (Exception e) {
-					////////INDICO A TODOS LOS OBSERVADORES QUE HAY UN ERROR //////
-					for(TrafficSimObserver o : this.listaObservadores){
-						o.onError(e.getMessage());					
-					}
-					
-					e.getMessage();
-				}
-			}
 			
 			
 			for(TrafficSimObserver o : this.listaObservadores){

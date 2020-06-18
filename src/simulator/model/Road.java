@@ -69,7 +69,7 @@ public abstract class Road extends SimulatedObject {
 		
 
 	@Override
-	void advance(int time) throws Exception {
+	void advance(int time) {
 	
 		
 		//1
