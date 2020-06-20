@@ -63,13 +63,12 @@ public class Controller {
 		int i =0;
 		
 		if (out == null) {
-			 out = new OutputStream() {
-		
-				@Override
-				public void write(int b) throws IOException {}	
-				};
+			 
+			while(i <in){
+				_sim.advance();
+				i++;
+			}
 			
-			_sim.advance();
 			
 		}
 		else{

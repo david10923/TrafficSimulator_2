@@ -212,6 +212,7 @@ public class Main {
 							try {
 								in = new FileInputStream(new File(_inFile));
 								ctrl.loadEvents(in);
+								ctrl.run(_timeLimit);
 							} catch (FileNotFoundException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
