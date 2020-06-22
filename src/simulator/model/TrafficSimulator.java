@@ -55,9 +55,22 @@ public class TrafficSimulator implements Observable<TrafficSimObserver> {
 				
 				while(it.hasNext()){
 					Event e = it.next();
-					if(e.getTime() == this.time_of_simulation){						
-							e.execute(this.map_of_roads);					
+					if(e.getTime() == this.time_of_simulation){	
+						try{
+							e.execute(this.map_of_roads);		
+						}
+						catch(Exception ex ){
+							for(TrafficSimObserver o : this.listaObservadores){
+								o.onError(ex.getMessage());					
+							}
+							ex.getMessage();
+							
+						}
+						finally{
 							it.remove();
+						}
+																
+							
 						}
 						
 					}				
